@@ -2,6 +2,74 @@
   <header class="header">
     <div class="header__logo">
       <NuxtLink to="/" class="header__link">
+        <svg
+          class="header__logo-icon"
+          viewBox="0 0 100 100"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <defs>
+            <linearGradient id="hdrMono" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#2a1f4a" />
+              <stop offset="100%" stop-color="#4a3a7a" />
+            </linearGradient>
+            <linearGradient id="hdrAccent" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#E4B88A" />
+              <stop offset="100%" stop-color="#C89563" />
+            </linearGradient>
+          </defs>
+
+          <circle
+            cx="50"
+            cy="50"
+            r="44"
+            fill="none"
+            stroke="url(#hdrMono)"
+            stroke-width="1.5"
+          />
+
+          <g transform="translate(50, 50)">
+            <path
+              d="M -17 -14 C -17 -26, 17 -26, 17 -14"
+              fill="none"
+              stroke="url(#hdrMono)"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M -20 0 C -20 -9, 20 -9, 20 0"
+              fill="none"
+              stroke="url(#hdrMono)"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            />
+            <path
+              d="M -17 14 C -17 26, 17 26, 17 14"
+              fill="none"
+              stroke="url(#hdrMono)"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="-19"
+              y1="-15"
+              x2="-19"
+              y2="15"
+              stroke="url(#hdrMono)"
+              stroke-width="2.2"
+              stroke-linecap="round"
+            />
+            <line
+              x1="-24"
+              y1="0"
+              x2="24"
+              y2="0"
+              stroke="url(#hdrAccent)"
+              stroke-width="1.2"
+              stroke-linecap="round"
+            />
+          </g>
+        </svg>
         <span class="header__title">ЭМПАТИУМ</span>
       </NuxtLink>
     </div>
@@ -10,7 +78,6 @@
       <NuxtLink to="/personal" class="header__nav-link">Личное развитие</NuxtLink>
       <NuxtLink to="/corporate" class="header__nav-link">Корпоративные программы</NuxtLink>
       <NuxtLink to="/about" class="header__nav-link">О проекте</NuxtLink>
-      <NuxtLink to="/contact" class="header__nav-link header__nav-link--accent"></NuxtLink>
     </nav>
   </header>
 </template>
@@ -20,10 +87,10 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem 2rem;
-  background: linear-gradient(135deg, #F5F5DC 0%, #E8D5C4 100%);
-  border-bottom: 2px solid #B19CD9;
-  box-shadow: 0 2px 8px rgba(135, 206, 235, 0.15);
+  padding: 1rem 3rem;
+  background: #FEFCF5;
+  border-bottom: 1px solid #E6E2D8;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
 }
 
 .header__logo {
@@ -31,16 +98,25 @@
   align-items: center;
 }
 
-.header__title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #8B7AB8;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+.header__link {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  text-decoration: none;
 }
 
-.header__link {
-  text-decoration: none;
+.header__logo-icon {
+  width: 2.25rem;
+  height: 2.25rem;
+  flex-shrink: 0;
+}
+
+.header__title {
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #3a2673;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
 }
 
 .header__nav {
@@ -50,9 +126,10 @@
 }
 
 .header__nav-link {
-  color: #5A6B8C;
+  color: #2c3a2c;
   text-decoration: none;
   font-weight: 500;
+  font-size: 0.95rem;
   padding: 0.5rem 0.75rem;
   border-radius: 6px;
   transition: all 0.2s ease;
@@ -61,8 +138,8 @@
 
 .header__nav-link:hover,
 .header__nav-link.router-link-active {
-  color: #B19CD9;
-  background: rgba(177, 156, 217, 0.1);
+  color: #3a2673;
+  background: rgba(139, 122, 184, 0.08);
 }
 
 .header__nav-link::after {
@@ -73,7 +150,7 @@
   transform: translateX(-50%) scaleX(0);
   width: 80%;
   height: 2px;
-  background: #87CEEB;
+  background: #D4A373;
   transition: transform 0.2s ease;
   transform-origin: center;
 }
@@ -81,20 +158,6 @@
 .header__nav-link:hover::after,
 .header__nav-link.router-link-active::after {
   transform: translateX(-50%) scaleX(1);
-}
-
-.header__nav-link--accent {
-  width: 2.5rem;
-  height: 2.5rem;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #B19CD9, #87CEEB);
-  border: 2px solid #F5F5DC;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.header__nav-link--accent:hover {
-  transform: scale(1.05);
-  box-shadow: 0 4px 12px rgba(135, 206, 235, 0.4);
 }
 
 @media (max-width: 768px) {

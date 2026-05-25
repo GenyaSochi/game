@@ -22,11 +22,11 @@
 
 <style scoped>
 .footer {
-  background: linear-gradient(135deg, #E8D5C4 0%, #F5F5DC 100%);
-  border-top: 2px solid #B19CD9;
-  padding: 2rem 1rem;
+  background: #FFFFFF;
+  border-top: 1px solid #E6E2D8;
+  padding: 2.5rem 1rem;
   margin-top: auto;
-  color: #5A6B8C;
+  color: #4A5B4A;
 }
 
 .footer__container {
@@ -45,15 +45,15 @@
 .footer__title {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #8B7AB8;
-  letter-spacing: 0.05em;
+  color: #1E2A1E;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .footer__slogan {
   font-size: 0.9rem;
   margin-top: 0.25rem;
-  opacity: 0.8;
+  color: #4A5B4A;
 }
 
 .footer__nav {
@@ -64,7 +64,7 @@
 }
 
 .footer__link {
-  color: #5A6B8C;
+  color: #4A5B4A;
   text-decoration: none;
   font-weight: 500;
   padding: 0.25rem 0.5rem;
@@ -75,7 +75,7 @@
 
 .footer__link:hover,
 .footer__link.router-link-active {
-  color: #B19CD9;
+  color: #2F6B2F;
 }
 
 .footer__link::after {
@@ -86,7 +86,7 @@
   transform: translateX(-50%) scaleX(0);
   width: 80%;
   height: 2px;
-  background: #87CEEB;
+  background: #D4A373;
   transition: transform 0.2s ease;
 }
 
@@ -98,9 +98,10 @@
 .footer__bottom {
   text-align: center;
   font-size: 0.85rem;
+  color: #4A5B4A;
   opacity: 0.7;
   padding-top: 1rem;
-  border-top: 1px solid rgba(177, 156, 217, 0.3);
+  border-top: 1px solid #EFECE5;
   width: 100%;
 }
 
