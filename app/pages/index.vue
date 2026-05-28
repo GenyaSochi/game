@@ -10,11 +10,15 @@
           </p>
           <p class="hero__text">
             Научитесь читать эмоции, выстраивать глубокие связи и управлять
-            отношениями в игре, которая меняет реальную жизнь.
+            отношениями в игре, которая меняет реальную жизнь
           </p>
           <div class="hero__actions">
-            <NuxtLink to="/personal" class="btn btn--primary">Узнать расписание</NuxtLink>
-            <NuxtLink to="/about" class="btn btn--outline">Подробнее</NuxtLink>
+            <span class="btn-glow">
+              <NuxtLink to="/personal" class="btn btn--primary">Узнать расписание</NuxtLink>
+            </span>
+            <span class="btn-glow">
+              <NuxtLink to="/about" class="btn btn--outline">Подробнее</NuxtLink>
+            </span>
           </div>
         </div>
         <div class="hero__media">
@@ -95,9 +99,11 @@
             <h3 class="price-card__title">{{ plan.title }}</h3>
             <p class="price-card__desc">{{ plan.desc }}</p>
             <div class="price-card__price">{{ plan.price }}</div>
-            <NuxtLink :to="plan.link" class="btn btn--primary btn--small">
-              {{ plan.cta }}
-            </NuxtLink>
+            <span class="btn-glow">
+              <NuxtLink :to="plan.link" class="btn btn--primary btn--small">
+                {{ plan.cta }}
+              </NuxtLink>
+            </span>
           </article>
         </div>
       </div>
@@ -126,9 +132,11 @@
         <p class="cta__text">
           Оставьте заявку и мы подберём для вас подходящий формат игры
         </p>
-        <NuxtLink to="/contact" class="btn btn--primary btn--large">
-          Оставить заявку
-        </NuxtLink>
+        <span class="btn-glow btn-glow--large">
+          <NuxtLink to="/contact" class="btn btn--primary btn--large">
+            Оставить заявку
+          </NuxtLink>
+        </span>
       </div>
     </section>
   </main>
@@ -361,25 +369,53 @@ const plans = [
 
 .btn {
   display: inline-block;
-  padding: 0.85rem 2rem;
-  border-radius: 8px;
+  padding: 0.95rem 2.25rem;
+  border-radius: 14px;
   text-decoration: none;
+  font-family: Georgia, 'Times New Roman', serif;
   font-weight: 600;
   font-size: 0.95rem;
-  transition: all 0.2s ease;
+  letter-spacing: 0.03em;
+  border: none;
   cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+  position: relative;
 }
-.btn--primary { background: #8B7AB8; color: #FFFFFF; border: 2px solid #8B7AB8; }
+.btn--primary { 
+  color: #FFFFFF;
+  box-shadow:
+    0 4px 14px rgba(139, 122, 184, 0.25),
+    0 1px 2px rgba(0, 0, 0, 0.05);
+}
 .btn--primary:hover {
-  background: #6F5E9E;
-  border-color: #6F5E9E;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(139, 122, 184, 0.3);
+  box-shadow:
+    0 10px 28px rgba(139, 122, 184, 0.4),
+    0 4px 8px rgba(0, 0, 0, 0.08);
 }
-.btn--outline { background: transparent; color: #1E2A1E; border: 2px solid #E6E2D8; }
-.btn--outline:hover { border-color: #8B7AB8; color: #8B7AB8; }
-.btn--small { padding: 0.65rem 1.5rem; font-size: 0.9rem; }
-.btn--large { padding: 1rem 2.75rem; font-size: 1.05rem; }
+
+.btn--outline {
+  color: #FFFFFF; 
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.btn--outline:hover {
+
+  border-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+}
+
+.btn--small { padding: 0.7rem 1.6rem; font-size: 0.88rem; }
+.btn--large { padding: 1.1rem 3rem; font-size: 1.08rem; letter-spacing: 0.05em; }
+
+.btn-glow {
+  display: inline-block;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 1.5px;
+}
+.btn-glow > .btn {
+  display: block;
+}
 
 @media (max-width: 900px) {
   .hero__inner { grid-template-columns: 1fr; gap: 2rem; text-align: center; }

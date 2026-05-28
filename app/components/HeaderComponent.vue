@@ -28,46 +28,50 @@
             stroke-width="1.5"
           />
 
+          <!-- Мандала: внешняя группа задаёт позицию, внутренняя вращается -->
           <g transform="translate(50, 50)">
-            <path
-              d="M -17 -14 C -17 -26, 17 -26, 17 -14"
-              fill="none"
-              stroke="url(#hdrMono)"
-              stroke-width="2.2"
-              stroke-linecap="round"
-            />
-            <path
-              d="M -20 0 C -20 -9, 20 -9, 20 0"
-              fill="none"
-              stroke="url(#hdrMono)"
-              stroke-width="2.2"
-              stroke-linecap="round"
-            />
-            <path
-              d="M -17 14 C -17 26, 17 26, 17 14"
-              fill="none"
-              stroke="url(#hdrMono)"
-              stroke-width="2.2"
-              stroke-linecap="round"
-            />
-            <line
-              x1="-19"
-              y1="-15"
-              x2="-19"
-              y2="15"
-              stroke="url(#hdrMono)"
-              stroke-width="2.2"
-              stroke-linecap="round"
-            />
-            <line
-              x1="-24"
-              y1="0"
-              x2="24"
-              y2="0"
-              stroke="url(#hdrAccent)"
-              stroke-width="1.2"
-              stroke-linecap="round"
-            />
+            <g class="header__flower">
+              <!-- Тонкие лучи -->
+              <g opacity="0.45" stroke="url(#hdrAccent)" stroke-width="0.6" stroke-linecap="round">
+                <line x1="0" y1="-5" x2="0" y2="-32"/>
+                <line x1="0" y1="5" x2="0" y2="32"/>
+                <line x1="0" y1="-5" x2="0" y2="-32" transform="rotate(60)"/>
+                <line x1="0" y1="-5" x2="0" y2="-32" transform="rotate(120)"/>
+                <line x1="0" y1="-5" x2="0" y2="-32" transform="rotate(180)"/>
+                <line x1="0" y1="-5" x2="0" y2="-32" transform="rotate(240)"/>
+                <line x1="0" y1="-5" x2="0" y2="-32" transform="rotate(300)"/>
+              </g>
+
+              <!-- Три лепестка -->
+              <g>
+                <path
+                  d="M 0 -5 C -10 -14, -11 -27, 0 -32 C 11 -27, 10 -14, 0 -5 Z"
+                  fill="url(#hdrMono)"
+                  opacity="0.95"
+                />
+                <path
+                  d="M 0 -5 C -10 -14, -11 -27, 0 -32 C 11 -27, 10 -14, 0 -5 Z"
+                  fill="url(#hdrMono)"
+                  opacity="0.95"
+                  transform="rotate(120)"
+                />
+                <path
+                  d="M 0 -5 C -10 -14, -11 -27, 0 -32 C 11 -27, 10 -14, 0 -5 Z"
+                  fill="url(#hdrMono)"
+                  opacity="0.95"
+                  transform="rotate(240)"
+                />
+              </g>
+
+              <!-- Золотое ядро -->
+              <circle cx="0" cy="0" r="4.5" fill="url(#hdrAccent)"/>
+              <circle cx="0" cy="0" r="1.5" fill="#FFFFFF" opacity="0.9"/>
+
+              <!-- Точки на кончиках -->
+              <circle cx="0" cy="-32" r="1" fill="url(#hdrAccent)"/>
+              <circle cx="0" cy="-32" r="1" fill="url(#hdrAccent)" transform="rotate(120)"/>
+              <circle cx="0" cy="-32" r="1" fill="url(#hdrAccent)" transform="rotate(240)"/>
+            </g>
           </g>
         </svg>
         <span class="header__title">ЭМПАТИУМ</span>
@@ -171,5 +175,17 @@
     flex-wrap: wrap;
     justify-content: center;
   }
+}
+</style>
+
+<style>
+.header__flower {
+  transform-origin: 0 0;
+  animation: header-flower-spin 18s linear infinite;
+}
+
+@keyframes header-flower-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
 }
 </style>

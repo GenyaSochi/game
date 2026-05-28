@@ -37,49 +37,65 @@
         filter="url(#whiteGlow)"
       />
 
-      <!-- Монограмма Э -->
+      <!-- Мандала из трёх лепестков: гармония эмоций, мыслей и действий -->
       <g transform="translate(200, 175)">
-        <path
-          d="M -55 -45 C -55 -85, 55 -85, 55 -45"
-          fill="none"
-          stroke="url(#monoGrad)"
-          stroke-width="5"
-          stroke-linecap="round"
-        />
-        <path
-          d="M -65 0 C -65 -30, 65 -30, 65 0"
-          fill="none"
-          stroke="url(#monoGrad)"
-          stroke-width="5"
-          stroke-linecap="round"
-        />
-        <path
-          d="M -55 45 C -55 85, 55 85, 55 45"
-          fill="none"
-          stroke="url(#monoGrad)"
-          stroke-width="5"
-          stroke-linecap="round"
-        />
+        <!-- Тонкие лучи-линии, расходящиеся от центра -->
+        <g opacity="0.4" stroke="url(#monoAccent)" stroke-width="1" stroke-linecap="round">
+          <line x1="0" y1="-8" x2="0" y2="-95"/>
+          <line x1="0" y1="8" x2="0" y2="95" transform="rotate(0)"/>
+          <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(60)"/>
+          <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(120)"/>
+          <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(180)"/>
+          <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(240)"/>
+          <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(300)"/>
+        </g>
 
-        <line
-          x1="-60"
-          y1="-50"
-          x2="-60"
-          y2="50"
-          stroke="url(#monoGrad)"
-          stroke-width="5"
-          stroke-linecap="round"
-        />
+        <!-- Три лепестка, повёрнутые на 120° друг к другу -->
+        <g>
+          <!-- Верхний лепесток -->
+          <path
+            d="M 0 -15
+               C -28 -40, -32 -80, 0 -95
+               C 32 -80, 28 -40, 0 -15 Z"
+            fill="url(#monoGrad)"
+            opacity="0.92"
+          />
+          <!-- Правый нижний лепесток -->
+          <path
+            d="M 0 -15
+               C -28 -40, -32 -80, 0 -95
+               C 32 -80, 28 -40, 0 -15 Z"
+            fill="url(#monoGrad)"
+            opacity="0.92"
+            transform="rotate(120)"
+          />
+          <!-- Левый нижний лепесток -->
+          <path
+            d="M 0 -15
+               C -28 -40, -32 -80, 0 -95
+               C 32 -80, 28 -40, 0 -15 Z"
+            fill="url(#monoGrad)"
+            opacity="0.92"
+            transform="rotate(240)"
+          />
+        </g>
 
-        <line
-          x1="-78"
-          y1="0"
-          x2="78"
-          y2="0"
-          stroke="url(#monoAccent)"
-          stroke-width="2.5"
-          stroke-linecap="round"
-        />
+        <!-- Контурные обводки лепестков для лёгкости -->
+        <g fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.6">
+          <path d="M 0 -15 C -28 -40, -32 -80, 0 -95 C 32 -80, 28 -40, 0 -15 Z"/>
+          <path d="M 0 -15 C -28 -40, -32 -80, 0 -95 C 32 -80, 28 -40, 0 -15 Z" transform="rotate(120)"/>
+          <path d="M 0 -15 C -28 -40, -32 -80, 0 -95 C 32 -80, 28 -40, 0 -15 Z" transform="rotate(240)"/>
+        </g>
+
+        <!-- Внутренний золотой круг (ядро эмоции) -->
+        <circle cx="0" cy="0" r="14" fill="url(#monoAccent)" filter="url(#whiteGlow)"/>
+        <circle cx="0" cy="0" r="8" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.7"/>
+        <circle cx="0" cy="0" r="3" fill="#FFFFFF" opacity="0.95"/>
+
+        <!-- Три маленькие золотые точки на кончиках лепестков -->
+        <circle cx="0" cy="-95" r="3" fill="url(#monoAccent)"/>
+        <circle cx="0" cy="-95" r="3" fill="url(#monoAccent)" transform="rotate(120)"/>
+        <circle cx="0" cy="-95" r="3" fill="url(#monoAccent)" transform="rotate(240)"/>
       </g>
 
       <!-- Светящаяся разделительная линия -->
@@ -123,10 +139,5 @@
   width: 100%;
   height: auto;
   display: block;
-  transition: transform 0.4s ease;
-}
-
-.logo:hover {
-  transform: scale(1.02);
 }
 </style>
