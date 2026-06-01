@@ -1,5 +1,11 @@
 <template>
   <main class="page">
+    <ClientOnly>
+      <canvas
+        ref="dustCanvas"
+        style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;"
+      ></canvas>
+    </ClientOnly>
     <section class="hero">
       <div class="hero__inner">
         <div class="hero__content">
@@ -144,6 +150,131 @@
 
 <script setup>
 import MainComponent from '~/components/MainComponent.vue'
+import { ref, watch, onBeforeUnmount } from 'vue'
+
+const dustCanvas = ref(null)
+
+const golds = [
+  [212, 163, 115],
+  [228, 184, 138],
+  [200, 149, 99],
+  [255, 215, 140],
+  [255, 235, 180],
+]
+
+class Particle {
+  constructor(x, y) {
+    this.x = x
+    this.y = y
+    this.vx = (Math.random() - 0.5) * 2
+    this.vy = (Math.random() - 0.5) * 2 - 1.5
+    this.life = 1
+    this.decay = 0.02 + Math.random() * 0.02
+    this.size = 2 + Math.random() * 2
+    this.color = golds[Math.floor(Math.random() * golds.length)]
+  }
+
+  update() {
+    this.x += this.vx
+    this.y += this.vy
+    this.vy += 0.04
+    this.vx *= 0.98
+    this.life -= this.decay
+  }
+
+  draw(ctx) {
+    if (this.life <= 0) return
+    const alpha = Math.max(0, this.life * 0.8)
+    const radius = Math.max(0.1, this.size * this.life)
+    const [r, g, b] = this.color
+    ctx.globalAlpha = alpha
+    ctx.beginPath()
+    ctx.arc(this.x, this.y, radius, 0, Math.PI * 2)
+    ctx.fillStyle = `rgb(${r}, ${g}, ${b})`
+    ctx.shadowBlur = 6
+    ctx.shadowColor = `rgba(${r}, ${g}, ${b}, 0.6)`
+    ctx.fill()
+  }
+}
+
+let particles = []
+let mouseX = -999
+let mouseY = -999
+let lastEmit = 0
+let animId = null
+let running = false
+let resizeHandler = null
+
+const onMouseMove = (e) => {
+  mouseX = e.clientX
+  mouseY = e.clientY
+}
+
+const startDust = (canvas) => {
+  if (running) return
+  running = true
+
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return
+
+  resizeHandler = () => {
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+  }
+  resizeHandler()
+
+  window.addEventListener('resize', resizeHandler)
+  window.addEventListener('mousemove', onMouseMove)
+
+  console.log('[dust] started, canvas:', canvas.width, 'x', canvas.height)
+
+  const loop = (time) => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    if (mouseX > 0 && mouseY > 0 && time - lastEmit > 20) {
+      for (let i = 0; i < 2; i++) {
+        particles.push(new Particle(
+          mouseX + (Math.random() - 0.5) * 8,
+          mouseY + (Math.random() - 0.5) * 8
+        ))
+      }
+      lastEmit = time
+    }
+
+    ctx.globalAlpha = 1
+    ctx.shadowBlur = 0
+
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i]
+      p.update()
+      if (p.life <= 0) {
+        particles.splice(i, 1)
+      } else {
+        p.draw(ctx)
+      }
+    }
+
+    if (particles.length > 200) {
+      particles = particles.slice(-200)
+    }
+
+    animId = requestAnimationFrame(loop)
+  }
+
+  animId = requestAnimationFrame(loop)
+}
+
+watch(dustCanvas, (canvas) => {
+  if (canvas) startDust(canvas)
+}, { flush: 'post' })
+
+onBeforeUnmount(() => {
+  if (animId) cancelAnimationFrame(animId)
+  if (resizeHandler) window.removeEventListener('resize', resizeHandler)
+  window.removeEventListener('mousemove', onMouseMove)
+  running = false
+  particles = []
+})
 
 const stats = [
   { value: '10 000+', label: 'игроков' },
@@ -211,7 +342,7 @@ const plans = [
   line-height: 1.7;
 }
 
-.hero { padding: 4rem 1rem 5rem;   background: linear-gradient(135deg, #2a1f4a 30%, #7a6ba5 100%); }
+.hero { padding: 4rem 1rem 5rem; background: linear-gradient(135deg, #2a1f4a 30%, #7a6ba5 100%); }
 .hero__inner {
   max-width: 1120px;
   margin: 0 auto;
@@ -381,7 +512,7 @@ const plans = [
   transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   position: relative;
 }
-.btn--primary { 
+.btn--primary {
   color: #FFFFFF;
   box-shadow:
     0 4px 14px rgba(139, 122, 184, 0.25),
@@ -394,12 +525,11 @@ const plans = [
 }
 
 .btn--outline {
-  color: #FFFFFF; 
+  color: #FFFFFF;
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 .btn--outline:hover {
-
   border-color: rgba(255, 255, 255, 0.5);
   box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
 }
