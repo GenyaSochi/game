@@ -39,63 +39,65 @@
 
       <!-- Мандала из трёх лепестков: гармония эмоций, мыслей и действий -->
       <g transform="translate(200, 175)">
-        <!-- Тонкие лучи-линии, расходящиеся от центра -->
-        <g opacity="0.4" stroke="url(#monoAccent)" stroke-width="1" stroke-linecap="round">
-          <line x1="0" y1="-8" x2="0" y2="-95"/>
-          <line x1="0" y1="8" x2="0" y2="95" transform="rotate(0)"/>
-          <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(60)"/>
-          <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(120)"/>
-          <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(180)"/>
-          <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(240)"/>
-          <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(300)"/>
+        <g ref="flowerEl" class="main-flower">
+          <!-- Тонкие лучи-линии, расходящиеся от центра -->
+          <g opacity="0.4" stroke="url(#monoAccent)" stroke-width="1" stroke-linecap="round">
+            <line x1="0" y1="-8" x2="0" y2="-95"/>
+            <line x1="0" y1="8" x2="0" y2="95" transform="rotate(0)"/>
+            <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(60)"/>
+            <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(120)"/>
+            <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(180)"/>
+            <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(240)"/>
+            <line x1="0" y1="-8" x2="0" y2="-95" transform="rotate(300)"/>
+          </g>
+
+          <!-- Три лепестка, повёрнутые на 120° друг к другу -->
+          <g>
+            <!-- Верхний лепесток -->
+            <path
+              d="M 0 -15
+                 C -28 -40, -32 -80, 0 -95
+                 C 32 -80, 28 -40, 0 -15 Z"
+              fill="url(#monoGrad)"
+              opacity="0.92"
+            />
+            <!-- Правый нижний лепесток -->
+            <path
+              d="M 0 -15
+                 C -28 -40, -32 -80, 0 -95
+                 C 32 -80, 28 -40, 0 -15 Z"
+              fill="url(#monoGrad)"
+              opacity="0.92"
+              transform="rotate(120)"
+            />
+            <!-- Левый нижний лепесток -->
+            <path
+              d="M 0 -15
+                 C -28 -40, -32 -80, 0 -95
+                 C 32 -80, 28 -40, 0 -15 Z"
+              fill="url(#monoGrad)"
+              opacity="0.92"
+              transform="rotate(240)"
+            />
+          </g>
+
+          <!-- Контурные обводки лепестков для лёгкости -->
+          <g fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.6">
+            <path d="M 0 -15 C -28 -40, -32 -80, 0 -95 C 32 -80, 28 -40, 0 -15 Z"/>
+            <path d="M 0 -15 C -28 -40, -32 -80, 0 -95 C 32 -80, 28 -40, 0 -15 Z" transform="rotate(120)"/>
+            <path d="M 0 -15 C -28 -40, -32 -80, 0 -95 C 32 -80, 28 -40, 0 -15 Z" transform="rotate(240)"/>
+          </g>
+
+          <!-- Внутренний золотой круг (ядро эмоции) -->
+          <circle cx="0" cy="0" r="14" fill="url(#monoAccent)" filter="url(#whiteGlow)"/>
+          <circle cx="0" cy="0" r="8" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.7"/>
+          <circle cx="0" cy="0" r="3" fill="#FFFFFF" opacity="0.95"/>
+
+          <!-- Три маленькие золотые точки на кончиках лепестков -->
+          <circle cx="0" cy="-95" r="3" fill="url(#monoAccent)"/>
+          <circle cx="0" cy="-95" r="3" fill="url(#monoAccent)" transform="rotate(120)"/>
+          <circle cx="0" cy="-95" r="3" fill="url(#monoAccent)" transform="rotate(240)"/>
         </g>
-
-        <!-- Три лепестка, повёрнутые на 120° друг к другу -->
-        <g>
-          <!-- Верхний лепесток -->
-          <path
-            d="M 0 -15
-               C -28 -40, -32 -80, 0 -95
-               C 32 -80, 28 -40, 0 -15 Z"
-            fill="url(#monoGrad)"
-            opacity="0.92"
-          />
-          <!-- Правый нижний лепесток -->
-          <path
-            d="M 0 -15
-               C -28 -40, -32 -80, 0 -95
-               C 32 -80, 28 -40, 0 -15 Z"
-            fill="url(#monoGrad)"
-            opacity="0.92"
-            transform="rotate(120)"
-          />
-          <!-- Левый нижний лепесток -->
-          <path
-            d="M 0 -15
-               C -28 -40, -32 -80, 0 -95
-               C 32 -80, 28 -40, 0 -15 Z"
-            fill="url(#monoGrad)"
-            opacity="0.92"
-            transform="rotate(240)"
-          />
-        </g>
-
-        <!-- Контурные обводки лепестков для лёгкости -->
-        <g fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.6">
-          <path d="M 0 -15 C -28 -40, -32 -80, 0 -95 C 32 -80, 28 -40, 0 -15 Z"/>
-          <path d="M 0 -15 C -28 -40, -32 -80, 0 -95 C 32 -80, 28 -40, 0 -15 Z" transform="rotate(120)"/>
-          <path d="M 0 -15 C -28 -40, -32 -80, 0 -95 C 32 -80, 28 -40, 0 -15 Z" transform="rotate(240)"/>
-        </g>
-
-        <!-- Внутренний золотой круг (ядро эмоции) -->
-        <circle cx="0" cy="0" r="14" fill="url(#monoAccent)" filter="url(#whiteGlow)"/>
-        <circle cx="0" cy="0" r="8" fill="none" stroke="#FFFFFF" stroke-width="1" opacity="0.7"/>
-        <circle cx="0" cy="0" r="3" fill="#FFFFFF" opacity="0.95"/>
-
-        <!-- Три маленькие золотые точки на кончиках лепестков -->
-        <circle cx="0" cy="-95" r="3" fill="url(#monoAccent)"/>
-        <circle cx="0" cy="-95" r="3" fill="url(#monoAccent)" transform="rotate(120)"/>
-        <circle cx="0" cy="-95" r="3" fill="url(#monoAccent)" transform="rotate(240)"/>
       </g>
 
       <!-- Светящаяся разделительная линия -->
@@ -126,6 +128,33 @@
   </div>
 </template>
 
+<script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue'
+
+const flowerEl = ref(null)
+let animationId = null
+let currentAngle = 0
+const speed = 360 / 60 / 60 // 360° за 60 секунд при 60fps — медленное постоянное вращение
+
+const animate = () => {
+  currentAngle = (currentAngle + speed) % 360
+  if (flowerEl.value) {
+    flowerEl.value.setAttribute('transform', `rotate(${currentAngle})`)
+  }
+  animationId = requestAnimationFrame(animate)
+}
+
+onMounted(() => {
+  animationId = requestAnimationFrame(animate)
+})
+
+onBeforeUnmount(() => {
+  if (animationId) {
+    cancelAnimationFrame(animationId)
+  }
+})
+</script>
+
 <style scoped>
 .main-image-wrapper {
   width: 100%;
@@ -139,5 +168,11 @@
   width: 100%;
   height: auto;
   display: block;
+}
+</style>
+
+<style>
+.main-flower {
+  transform-origin: 0 0;
 }
 </style>

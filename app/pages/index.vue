@@ -204,10 +204,17 @@ let lastEmit = 0
 let animId = null
 let running = false
 let resizeHandler = null
+let isMoving = false
+let idleTimer = null
 
 const onMouseMove = (e) => {
   mouseX = e.clientX
   mouseY = e.clientY
+  isMoving = true
+  if (idleTimer) clearTimeout(idleTimer)
+  idleTimer = setTimeout(() => {
+    isMoving = false
+  }, 120)
 }
 
 const startDust = (canvas) => {
@@ -231,7 +238,24 @@ const startDust = (canvas) => {
   const loop = (time) => {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    if (mouseX > 0 && mouseY > 0 && time - lastEmit > 20) {
+    // Ореол вокруг курсора (всегда)
+    if (mouseX > 0 && mouseY > 0) {
+      ctx.globalAlpha = 1
+      ctx.shadowBlur = 0
+      
+      const gradient = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 20)
+      gradient.addColorStop(0, 'rgba(212, 163, 115, 0.4)')
+      gradient.addColorStop(0.5, 'rgba(228, 184, 138, 0.2)')
+      gradient.addColorStop(1, 'rgba(255, 215, 140, 0)')
+      
+      ctx.fillStyle = gradient
+      ctx.beginPath()
+      ctx.arc(mouseX, mouseY, 20, 0, Math.PI * 2)
+      ctx.fill()
+    }
+
+    // Искры только при движении
+    if (mouseX > 0 && mouseY > 0 && isMoving && time - lastEmit > 20) {
       for (let i = 0; i < 2; i++) {
         particles.push(new Particle(
           mouseX + (Math.random() - 0.5) * 8,
@@ -270,6 +294,7 @@ watch(dustCanvas, (canvas) => {
 
 onBeforeUnmount(() => {
   if (animId) cancelAnimationFrame(animId)
+  if (idleTimer) clearTimeout(idleTimer)
   if (resizeHandler) window.removeEventListener('resize', resizeHandler)
   window.removeEventListener('mousemove', onMouseMove)
   running = false
