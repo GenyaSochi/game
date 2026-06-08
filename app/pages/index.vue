@@ -6,6 +6,24 @@
         style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;"
       ></canvas>
     </ClientOnly>
+
+    <div class="flowers" aria-hidden="true">
+      <img
+        v-for="flower in flowers"
+        :key="flower.src"
+        :src="flower.src"
+        alt=""
+        class="flower"
+        :style="{
+          top: flower.top,
+          left: flower.left,
+          width: flower.size,
+          transform: `rotate(${flower.rotate}deg)`,
+          opacity: flower.opacity,
+        }"
+      />
+    </div>
+
     <section class="hero">
       <div class="hero__inner">
         <div class="hero__content">
@@ -44,20 +62,26 @@
       </div>
     </section>
 
-    <section class="section">
+    <section class="section section--empatiyum">
       <div class="container container--narrow">
-        <h2 class="section__title">Что такое Эмпатиум?</h2>
+        <h2 class="section__title">Что такое Эмпатиум</h2>
         <div class="section__divider"></div>
         <p class="section__lead">
-          Это не просто настольная игра — это авторская методика развития
-          эмоционального интеллекта, созданная Елизаветой Ловягиной.
+          «Эмпатиум» — это не скучная настолка — это игра-терапия, созданная
+          Елизаветой Ловягиной, которая за 2 часа научит вас читать людей
+          как открытые книги
         </p>
         <p class="section__text">
-          В безопасном игровом пространстве вы снимаете социальные маски,
-          возвращаетесь к естественной открытости и учитесь замечать то, что
-          обычно ускользает: микровыражения лица, интонации, настоящие чувства
-          собеседника.
+          Вы снимете маски, вернётесь к естественной открытости и начнёте
+          замечать то, что обычно ускользает: микровыражения лица, интонации,
+          настоящие чувства собеседника
         </p>
+        <p class="section__cta-text">Хотите, чтобы вас понимали без слов?</p>
+        <div class="section__cta">
+          <span class="btn-glow">
+            <NuxtLink to="/personal" class="btn btn--primary">Записаться на игру</NuxtLink>
+          </span>
+        </div>
       </div>
     </section>
 
@@ -67,7 +91,6 @@
         <div class="section__divider"></div>
         <div class="cards">
           <article class="card" v-for="skill in skills" :key="skill.title">
-            <div class="card__icon">{{ skill.icon }}</div>
             <h3 class="card__title">{{ skill.title }}</h3>
             <p class="card__text">{{ skill.text }}</p>
           </article>
@@ -124,8 +147,8 @@
             <h3 class="founder__name">Елизавета Ловягина</h3>
             <p class="founder__bio">
               Предприниматель, академический эксперт, создатель «Лаборатории
-              эмоционального интеллекта». Более 7 лет исследует природу эмпатии
-              и разрабатывает практики её развития для частных лиц и корпораций.
+              эмоционального интеллекта» — более 7 лет исследует природу эмпатии
+              и разрабатывает практики её развития для частных лиц и корпораций
             </p>
           </div>
         </div>
@@ -301,6 +324,52 @@ onBeforeUnmount(() => {
   particles = []
 })
 
+// Плотный S-образный шлейф пионов через всю страницу
+const flowers = [
+  // Старт — верхний левый угол
+  { src: '/photo/flowers/peony1.jpg',       top: '2%',   left: '-4%',  size: '320px', rotate: -15, opacity: 0.6 },
+  { src: '/photo/flowers/white-peony.avif', top: '5%',   left: '8%',   size: '160px', rotate: 42,  opacity: 0.44 },
+  { src: '/photo/flowers/peony2.png',       top: '8%',   left: '18%',  size: '200px', rotate: 22,  opacity: 0.5 },
+  { src: '/photo/flowers/peony1.jpg',       top: '11%',  left: '26%',  size: '150px', rotate: -35, opacity: 0.44 },
+
+  // Первая волна → вправо
+  { src: '/photo/flowers/peony2.png',       top: '15%',  left: '36%',  size: '230px', rotate: -28, opacity: 0.56 },
+  { src: '/photo/flowers/white-peony.avif', top: '18%',  left: '46%',  size: '140px', rotate: 55,  opacity: 0.44 },
+  { src: '/photo/flowers/peony1.jpg',       top: '21%',  left: '56%',  size: '180px', rotate: -10, opacity: 0.5 },
+  { src: '/photo/flowers/peony2.png',       top: '24%',  left: '66%',  size: '250px', rotate: 18,  opacity: 0.56 },
+  { src: '/photo/flowers/white-peony.avif', top: '28%',  left: '78%',  size: '170px', rotate: -42, opacity: 0.46 },
+  { src: '/photo/flowers/peony1.jpg',       top: '31%',  left: '86%',  size: '210px', rotate: -32, opacity: 0.54 },
+  { src: '/photo/flowers/peony2.png',       top: '35%',  left: '93%',  size: '290px', rotate: 12,  opacity: 0.6 },
+
+  // Поворот ← влево
+  { src: '/photo/flowers/white-peony.avif', top: '39%',  left: '84%',  size: '160px', rotate: 38,  opacity: 0.44 },
+  { src: '/photo/flowers/peony1.jpg',       top: '43%',  left: '74%',  size: '200px', rotate: -20, opacity: 0.52 },
+  { src: '/photo/flowers/peony2.png',       top: '47%',  left: '62%',  size: '240px', rotate: 30,  opacity: 0.55 },
+  { src: '/photo/flowers/white-peony.avif', top: '50%',  left: '50%',  size: '150px', rotate: -48, opacity: 0.46 },
+  { src: '/photo/flowers/peony1.jpg',       top: '53%',  left: '38%',  size: '210px', rotate: 20,  opacity: 0.52 },
+  { src: '/photo/flowers/peony2.png',       top: '56%',  left: '26%',  size: '180px', rotate: -15, opacity: 0.5 },
+  { src: '/photo/flowers/white-peony.avif', top: '59%',  left: '14%',  size: '220px', rotate: -40, opacity: 0.54 },
+  { src: '/photo/flowers/peony1.jpg',       top: '62%',  left: '3%',   size: '190px', rotate: 32,  opacity: 0.5 },
+  { src: '/photo/flowers/peony2.png',       top: '65%',  left: '-4%',  size: '270px', rotate: 25,  opacity: 0.58 },
+
+  // Вторая волна → вправо
+  { src: '/photo/flowers/white-peony.avif', top: '69%',  left: '8%',   size: '150px', rotate: -55, opacity: 0.44 },
+  { src: '/photo/flowers/peony1.jpg',       top: '72%',  left: '22%',  size: '210px', rotate: -18, opacity: 0.52 },
+  { src: '/photo/flowers/peony2.png',       top: '75%',  left: '36%',  size: '170px', rotate: 42,  opacity: 0.48 },
+  { src: '/photo/flowers/white-peony.avif', top: '78%',  left: '48%',  size: '250px', rotate: 35,  opacity: 0.56 },
+  { src: '/photo/flowers/peony1.jpg',       top: '81%',  left: '60%',  size: '160px', rotate: -28, opacity: 0.46 },
+  { src: '/photo/flowers/peony2.png',       top: '84%',  left: '72%',  size: '220px', rotate: -25, opacity: 0.54 },
+  { src: '/photo/flowers/white-peony.avif', top: '87%',  left: '84%',  size: '190px', rotate: 18,  opacity: 0.5 },
+  { src: '/photo/flowers/peony1.jpg',       top: '90%',  left: '92%',  size: '290px', rotate: 15,  opacity: 0.6 },
+
+  // Финал — нижний левый угол
+  { src: '/photo/flowers/peony2.png',       top: '93%',  left: '80%',  size: '160px', rotate: -45, opacity: 0.46 },
+  { src: '/photo/flowers/white-peony.avif', top: '96%',  left: '66%',  size: '200px', rotate: -30, opacity: 0.5 },
+  { src: '/photo/flowers/peony1.jpg',       top: '99%',  left: '50%',  size: '240px', rotate: 28,  opacity: 0.54 },
+  { src: '/photo/flowers/peony2.png',       top: '102%', left: '32%',  size: '180px', rotate: -18, opacity: 0.48 },
+  { src: '/photo/flowers/white-peony.avif', top: '105%', left: '12%',  size: '310px', rotate: -20, opacity: 0.58 },
+]
+
 const stats = [
   { value: '10 000+', label: 'игроков' },
   { value: '100+', label: 'городов' },
@@ -309,47 +378,90 @@ const stats = [
 ]
 
 const skills = [
-  { icon: '◈', title: 'Распознавание эмоций', text: 'Учитесь считывать невербальные и паралингвистические сигналы собеседника.' },
-  { icon: '◇', title: 'Эмпатическая связь', text: 'Создаёте глубокий эмоциональный контакт даже с незнакомыми людьми.' },
-  { icon: '○', title: 'Управление эмоциями', text: 'Развиваете самоконтроль, стрессоустойчивость и эмоциональную стабильность.' },
-  { icon: '△', title: 'Активное слушание', text: 'Слышите не только слова, но и то, что стоит за ними.' },
-  { icon: '□', title: 'Командное взаимодействие', text: 'Строите доверие и мотивацию в коллективе через понимание.' },
-  { icon: '◆', title: 'Принятие решений', text: 'Принимаете взвешенные решения, учитывая эмоциональный контекст.' },
+  { icon: '◈', title: 'Распознавание эмоций', text: 'Учитесь считывать невербальные и паралингвистические сигналы собеседника' },
+  { icon: '◇', title: 'Эмпатическая связь', text: 'Создаёте глубокий эмоциональный контакт даже с незнакомыми людьми' },
+  { icon: '○', title: 'Управление эмоциями', text: 'Развиваете самоконтроль, стрессоустойчивость и эмоциональную стабильность' },
+  { icon: '△', title: 'Активное слушание', text: 'Слышите не только слова, но и то, что стоит за ними' },
+  { icon: '□', title: 'Командное взаимодействие', text: 'Строите доверие и мотивацию в коллективе через понимание' },
+  { icon: '◆', title: 'Принятие решений', text: 'Принимаете взвешенные решения, учитывая эмоциональный контекст' },
 ]
 
 const audiences = [
-  { title: 'Для себя', text: 'Тем, кто хочет лучше понимать себя и окружающих.', points: ['Развитие EQ', 'Улучшение отношений', 'Самопознание'] },
-  { title: 'Для руководителей', text: 'Лидерам, которые хотят управлять через понимание.', points: ['Построение команды', 'Мотивация', 'Сервисная эмпатия'] },
-  { title: 'Для семей', text: 'Родителям и парам, стремящимся к близости.', points: ['Глубокие связи', 'Разрешение конфликтов', 'Безопасность'] },
+  { title: 'Для себя', text: 'Тем, кто хочет лучше понимать себя и окружающих', points: ['Развитие EQ', 'Улучшение отношений', 'Самопознание'] },
+  { title: 'Для руководителей', text: 'Лидерам, которые хотят управлять через понимание', points: ['Построение команды', 'Мотивация', 'Сервисная эмпатия'] },
+  { title: 'Для семей', text: 'Родителям и парам, стремящимся к близости', points: ['Глубокие связи', 'Разрешение конфликтов', 'Безопасность'] },
 ]
 
 const plans = [
-  { title: 'Открытая игра', desc: 'Участие в сборной игре в Москве, СПб или онлайн.', price: '5 000 ₽', cta: 'Узнать расписание', link: '/personal', accent: false },
-  { title: 'Практикум ведущего', desc: 'Сертифицированное обучение проведению игр Эмпатиум.', price: 'от 16 000 ₽', cta: 'Подробнее', link: '/facilitator', accent: true },
-  { title: 'Корпоративная программа', desc: 'Индивидуальная программа для вашей команды.', price: 'по запросу', cta: 'Связаться', link: '/corporate', accent: false },
+  { title: 'Открытая игра', desc: 'Участие в сборной игре в Москве, СПб или онлайн', price: '5 000 ₽', cta: 'Узнать расписание', link: '/personal', accent: false },
+  { title: 'Практикум ведущего', desc: 'Сертифицированное обучение проведению игр Эмпатиум', price: 'от 16 000 ₽', cta: 'Подробнее', link: '/facilitator', accent: true },
+  { title: 'Корпоративная программа', desc: 'Индивидуальная программа для вашей команды', price: 'по запросу', cta: 'Связаться', link: '/corporate', accent: false },
 ]
 </script>
 
 <style scoped>
-.page { background: #FEFCF5; }
+.page { background: #FEFCF5; position: relative; overflow: hidden; }
+
+.flowers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+.flower {
+  position: absolute;
+  user-select: none;
+  mix-blend-mode: multiply;
+  filter: drop-shadow(0 8px 20px rgba(139, 122, 184, 0.15))
+          saturate(0.95)
+          contrast(0.98);
+  transition: transform 0.6s ease;
+}
+
+.page > section,
+.page > .container { position: relative; z-index: 2; }
 
 .section { padding: 5rem 1rem; }
-.section--light { background: #FFFFFF; }
+.section--light {
+  background:
+    linear-gradient(
+      135deg,
+      #FEFCF5 0%,
+      #FBF7EE 35%,
+      #F4EEFB 70%,
+      #EFE7F7 100%
+    );
+  position: relative;
+}
+.section--light::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 15% 20%, rgba(212, 163, 115, 0.06), transparent 45%),
+    radial-gradient(circle at 85% 80%, rgba(139, 122, 184, 0.07), transparent 50%);
+  pointer-events: none;
+}
 
 .container { max-width: 1120px; margin: 0 auto; }
 .container--narrow { max-width: 780px; margin: 0 auto; }
 
 .section__title {
-  font-size: 2.25rem;
-  color: #1E2A1E;
+  font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  font-size: 2.75rem;
+  color: #3D2C5A;
   text-align: center;
   margin-bottom: 0.75rem;
-  font-weight: 700;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 .section__divider {
   width: 48px;
   height: 3px;
-  background: #D4A373;
+  background: #6B5A9E;
   margin: 0 auto 2rem;
   border-radius: 2px;
 }
@@ -365,6 +477,37 @@ const plans = [
   color: #4A5B4A;
   text-align: center;
   line-height: 1.7;
+}
+.section--empatiyum {
+  background:
+    linear-gradient(
+      135deg,
+      #F8EDDF 0%,
+      #F1E2E6 45%,
+      #E8D9F0 100%
+    );
+  position: relative;
+}
+.section--empatiyum::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 20% 30%, rgba(212, 163, 115, 0.14), transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(139, 122, 184, 0.14), transparent 55%);
+  pointer-events: none;
+}
+.section__cta-text {
+  font-size: 1.2rem;
+  color: #1E2A1E;
+  text-align: center;
+  font-weight: 600;
+  margin-top: 2rem;
+  margin-bottom: 1.5rem;
+}
+.section__cta {
+  display: flex;
+  justify-content: center;
 }
 
 .hero { padding: 4rem 1rem 5rem; background: linear-gradient(135deg, #2a1f4a 30%, #7a6ba5 100%); }
@@ -388,12 +531,16 @@ const plans = [
   margin-bottom: 1.25rem;
 }
 .hero__title {
-  font-size: 3.5rem;
+  font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 100, 'WONK' 1;
+  font-size: 4rem;
   color: white;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-weight: 600;
+  letter-spacing: 0.02em;
   margin-bottom: 1rem;
-  line-height: 1.1;
+  line-height: 1.05;
+  text-shadow: 0 2px 30px rgba(139, 122, 184, 0.35);
 }
 .hero__subtitle {
   font-size: 1.35rem;
@@ -423,25 +570,85 @@ const plans = [
   font-weight: 700;
   color: #8B7AB8;
   margin-bottom: 0.5rem;
+  text-shadow:
+    0 0 20px rgba(139, 122, 184, 0.45),
+    0 0 40px rgba(139, 122, 184, 0.2),
+    0 0 60px rgba(139, 122, 184, 0.1);
 }
 .stat__label { font-size: 0.95rem; color: #4A5B4A; }
 
 .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 .card {
-  background: #FEFCF5;
-  border: 1px solid #EFECE5;
-  border-left: 3px solid #8B7AB8;
-  border-radius: 10px;
-  padding: 1.75rem;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+  border-radius: 18px;
+  padding: 2.25rem 1.75rem 1.75rem;
+  overflow: hidden;
+  isolation: isolate;
+  background: transparent;
+  border: none;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+              box-shadow 0.35s ease;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: -20%;
+  width: 180%;
+  height: 180%;
+  background: conic-gradient(
+    from 0deg at 50% 50%,
+    transparent 80deg,
+    transparent 180deg,
+    #D4A373 300deg,
+    #8B7AB8 330deg,
+    #D4A373 360deg
+  );
+  animation: card-glow-spin 5s linear infinite;
+  z-index: -2;
+  pointer-events: none;
+}
+.card::after {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: -1;
+  pointer-events: none;
+}
+.card > * {
+  position: relative;
+  z-index: 1;
 }
 .card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+  transform: translateY(-6px);
+  box-shadow:
+    0 20px 40px -12px rgba(139, 122, 184, 0.28),
+    0 8px 16px -8px rgba(0, 0, 0, 0.06),
+    0 0 30px -5px rgba(139, 122, 184, 0.35);
 }
-.card__icon { font-size: 1.75rem; color: #D4A373; margin-bottom: 0.75rem; }
-.card__title { font-size: 1.15rem; color: #1E2A1E; margin-bottom: 0.5rem; font-weight: 700; }
-.card__text { font-size: 0.95rem; color: #4A5B4A; line-height: 1.6; }
+
+@keyframes card-glow-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.card__title {
+  font-family: 'Fraunces', Georgia, serif;
+  font-size: 1.25rem;
+  color: #3D2C5A;
+  margin-bottom: 0.65rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+.card__text {
+  font-size: 0.95rem;
+  color: #4A5B4A;
+  line-height: 1.65;
+}
 
 .audiences { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
 .audience {
@@ -528,10 +735,10 @@ const plans = [
   padding: 0.95rem 2.25rem;
   border-radius: 14px;
   text-decoration: none;
-  font-family: Georgia, 'Times New Roman', serif;
-  font-weight: 600;
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-weight: 700;
   font-size: 0.95rem;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.01em;
   border: none;
   cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
@@ -539,24 +746,34 @@ const plans = [
 }
 .btn--primary {
   color: #FFFFFF;
+  background: linear-gradient(135deg, #8B7AB8 0%, #6B5A9E 50%, #9A88C4 100%);
+  background-size: 200% 200%;
+  background-position: 0% 50%;
   box-shadow:
-    0 4px 14px rgba(139, 122, 184, 0.25),
-    0 1px 2px rgba(0, 0, 0, 0.05);
+    0 4px 14px rgba(139, 122, 184, 0.35),
+    0 1px 2px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
 .btn--primary:hover {
+  background-position: 100% 50%;
+  transform: translateY(-2px);
   box-shadow:
-    0 10px 28px rgba(139, 122, 184, 0.4),
-    0 4px 8px rgba(0, 0, 0, 0.08);
+    0 12px 28px rgba(139, 122, 184, 0.5),
+    0 4px 8px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
 }
 
 .btn--outline {
   color: #FFFFFF;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.35);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
 .btn--outline:hover {
-  border-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.6);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
 }
 
 .btn--small { padding: 0.7rem 1.6rem; font-size: 0.88rem; }

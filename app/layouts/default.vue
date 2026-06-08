@@ -16,7 +16,8 @@ import FooterComponent from '~/components/FooterComponent.vue'
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  font-family: 'Georgia', 'Times New Roman', serif;
+  font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
   color: #1E2A1E;
 }
 
@@ -32,7 +33,11 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   color: #1E2A1E;
-  font-weight: 700;
+  font-weight: 600;
+  font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
+  font-optical-sizing: auto;
+  font-variation-settings: 'SOFT' 50, 'WONK' 0;
+  letter-spacing: -0.02em;
 }
 
 p, span, a {
