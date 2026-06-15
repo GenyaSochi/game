@@ -1,27 +1,18 @@
 <template>
   <main class="page">
     <ClientOnly>
-      <canvas
-        ref="dustCanvas"
-        style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;"
-      ></canvas>
+      <canvas ref="dustCanvas"
+        style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></canvas>
     </ClientOnly>
 
     <div class="flowers" aria-hidden="true">
-      <img
-        v-for="flower in flowers"
-        :key="flower.src"
-        :src="flower.src"
-        alt=""
-        class="flower"
-        :style="{
-          top: flower.top,
-          left: flower.left,
-          width: flower.size,
-          transform: `rotate(${flower.rotate}deg)`,
-          opacity: flower.opacity,
-        }"
-      />
+      <img v-for="flower in flowers" :key="flower.src" :src="flower.src" alt="" class="flower" :style="{
+        top: flower.top,
+        left: flower.left,
+        width: flower.size,
+        transform: `rotate(${flower.rotate}deg)`,
+        opacity: flower.opacity,
+      }" />
     </div>
 
     <section class="hero">
@@ -119,12 +110,8 @@
         <h2 class="section__title">Форматы и стоимость</h2>
         <div class="section__divider"></div>
         <div class="pricing">
-          <article
-            class="price-card"
-            v-for="plan in plans"
-            :key="plan.title"
-            :class="{ 'price-card--accent': plan.accent }"
-          >
+          <article class="price-card" v-for="plan in plans" :key="plan.title"
+            :class="{ 'price-card--accent': plan.accent }">
             <h3 class="price-card__title">{{ plan.title }}</h3>
             <p class="price-card__desc">{{ plan.desc }}</p>
             <div class="price-card__price">{{ plan.price }}</div>
@@ -141,14 +128,14 @@
     <section class="section">
       <div class="container container--narrow">
         <div class="founder">
-          <div class="founder__avatar"></div>
+          <img class="founder__avatar" src="/photo/main.webp" alt="Елизавета Ловягина" />
           <div class="founder__content">
-            <span class="founder__role">Основатель и автор методики</span>
-            <h3 class="founder__name">Елизавета Ловягина</h3>
+            <span class="founder__role">персональная консультация</span>
+            <h3 class="founder__name">Елена Смецкая</h3>
             <p class="founder__bio">
-              Предприниматель, академический эксперт, создатель «Лаборатории
-              эмоционального интеллекта» — более 7 лет исследует природу эмпатии
-              и разрабатывает практики её развития для частных лиц и корпораций
+              предприниматель, академический эксперт, руководитель «Лаборатории эмоционального интеллекта». Более 7 лет
+              она исследует природу эмпатии и разрабатывает практики её развития для частных лиц и корпораций. Елена —
+              ученица Елизаветы Ловягиной и бережно передаёт методику «Эмпатиум» в своей работе.
             </p>
           </div>
         </div>
@@ -265,12 +252,12 @@ const startDust = (canvas) => {
     if (mouseX > 0 && mouseY > 0) {
       ctx.globalAlpha = 1
       ctx.shadowBlur = 0
-      
+
       const gradient = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, 20)
       gradient.addColorStop(0, 'rgba(212, 163, 115, 0.4)')
       gradient.addColorStop(0.5, 'rgba(228, 184, 138, 0.2)')
       gradient.addColorStop(1, 'rgba(255, 215, 140, 0)')
-      
+
       ctx.fillStyle = gradient
       ctx.beginPath()
       ctx.arc(mouseX, mouseY, 20, 0, Math.PI * 2)
@@ -327,47 +314,47 @@ onBeforeUnmount(() => {
 // Плотный S-образный шлейф пионов через всю страницу
 const flowers = [
   // Старт — верхний левый угол
-  { src: '/photo/flowers/peony1.jpg',       top: '2%',   left: '-4%',  size: '320px', rotate: -15, opacity: 0.6 },
-  { src: '/photo/flowers/white-peony.avif', top: '5%',   left: '8%',   size: '160px', rotate: 42,  opacity: 0.44 },
-  { src: '/photo/flowers/peony2.png',       top: '8%',   left: '18%',  size: '200px', rotate: 22,  opacity: 0.5 },
-  { src: '/photo/flowers/peony1.jpg',       top: '11%',  left: '26%',  size: '150px', rotate: -35, opacity: 0.44 },
+  { src: '/photo/flowers/peony1.jpg', top: '2%', left: '-4%', size: '320px', rotate: -15, opacity: 0.6 },
+  { src: '/photo/flowers/white-peony.avif', top: '5%', left: '8%', size: '160px', rotate: 42, opacity: 0.44 },
+  { src: '/photo/flowers/peony2.png', top: '8%', left: '18%', size: '200px', rotate: 22, opacity: 0.5 },
+  { src: '/photo/flowers/peony1.jpg', top: '11%', left: '26%', size: '150px', rotate: -35, opacity: 0.44 },
 
   // Первая волна → вправо
-  { src: '/photo/flowers/peony2.png',       top: '15%',  left: '36%',  size: '230px', rotate: -28, opacity: 0.56 },
-  { src: '/photo/flowers/white-peony.avif', top: '18%',  left: '46%',  size: '140px', rotate: 55,  opacity: 0.44 },
-  { src: '/photo/flowers/peony1.jpg',       top: '21%',  left: '56%',  size: '180px', rotate: -10, opacity: 0.5 },
-  { src: '/photo/flowers/peony2.png',       top: '24%',  left: '66%',  size: '250px', rotate: 18,  opacity: 0.56 },
-  { src: '/photo/flowers/white-peony.avif', top: '28%',  left: '78%',  size: '170px', rotate: -42, opacity: 0.46 },
-  { src: '/photo/flowers/peony1.jpg',       top: '31%',  left: '86%',  size: '210px', rotate: -32, opacity: 0.54 },
-  { src: '/photo/flowers/peony2.png',       top: '35%',  left: '93%',  size: '290px', rotate: 12,  opacity: 0.6 },
+  { src: '/photo/flowers/peony2.png', top: '15%', left: '36%', size: '230px', rotate: -28, opacity: 0.56 },
+  { src: '/photo/flowers/white-peony.avif', top: '18%', left: '46%', size: '140px', rotate: 55, opacity: 0.44 },
+  { src: '/photo/flowers/peony1.jpg', top: '21%', left: '56%', size: '180px', rotate: -10, opacity: 0.5 },
+  { src: '/photo/flowers/peony2.png', top: '24%', left: '66%', size: '250px', rotate: 18, opacity: 0.56 },
+  { src: '/photo/flowers/white-peony.avif', top: '28%', left: '78%', size: '170px', rotate: -42, opacity: 0.46 },
+  { src: '/photo/flowers/peony1.jpg', top: '31%', left: '86%', size: '210px', rotate: -32, opacity: 0.54 },
+  { src: '/photo/flowers/peony2.png', top: '35%', left: '93%', size: '290px', rotate: 12, opacity: 0.6 },
 
   // Поворот ← влево
-  { src: '/photo/flowers/white-peony.avif', top: '39%',  left: '84%',  size: '160px', rotate: 38,  opacity: 0.44 },
-  { src: '/photo/flowers/peony1.jpg',       top: '43%',  left: '74%',  size: '200px', rotate: -20, opacity: 0.52 },
-  { src: '/photo/flowers/peony2.png',       top: '47%',  left: '62%',  size: '240px', rotate: 30,  opacity: 0.55 },
-  { src: '/photo/flowers/white-peony.avif', top: '50%',  left: '50%',  size: '150px', rotate: -48, opacity: 0.46 },
-  { src: '/photo/flowers/peony1.jpg',       top: '53%',  left: '38%',  size: '210px', rotate: 20,  opacity: 0.52 },
-  { src: '/photo/flowers/peony2.png',       top: '56%',  left: '26%',  size: '180px', rotate: -15, opacity: 0.5 },
-  { src: '/photo/flowers/white-peony.avif', top: '59%',  left: '14%',  size: '220px', rotate: -40, opacity: 0.54 },
-  { src: '/photo/flowers/peony1.jpg',       top: '62%',  left: '3%',   size: '190px', rotate: 32,  opacity: 0.5 },
-  { src: '/photo/flowers/peony2.png',       top: '65%',  left: '-4%',  size: '270px', rotate: 25,  opacity: 0.58 },
+  { src: '/photo/flowers/white-peony.avif', top: '39%', left: '84%', size: '160px', rotate: 38, opacity: 0.44 },
+  { src: '/photo/flowers/peony1.jpg', top: '43%', left: '74%', size: '200px', rotate: -20, opacity: 0.52 },
+  { src: '/photo/flowers/peony2.png', top: '47%', left: '62%', size: '240px', rotate: 30, opacity: 0.55 },
+  { src: '/photo/flowers/white-peony.avif', top: '50%', left: '50%', size: '150px', rotate: -48, opacity: 0.46 },
+  { src: '/photo/flowers/peony1.jpg', top: '53%', left: '38%', size: '210px', rotate: 20, opacity: 0.52 },
+  { src: '/photo/flowers/peony2.png', top: '56%', left: '26%', size: '180px', rotate: -15, opacity: 0.5 },
+  { src: '/photo/flowers/white-peony.avif', top: '59%', left: '14%', size: '220px', rotate: -40, opacity: 0.54 },
+  { src: '/photo/flowers/peony1.jpg', top: '62%', left: '3%', size: '190px', rotate: 32, opacity: 0.5 },
+  { src: '/photo/flowers/peony2.png', top: '65%', left: '-4%', size: '270px', rotate: 25, opacity: 0.58 },
 
   // Вторая волна → вправо
-  { src: '/photo/flowers/white-peony.avif', top: '69%',  left: '8%',   size: '150px', rotate: -55, opacity: 0.44 },
-  { src: '/photo/flowers/peony1.jpg',       top: '72%',  left: '22%',  size: '210px', rotate: -18, opacity: 0.52 },
-  { src: '/photo/flowers/peony2.png',       top: '75%',  left: '36%',  size: '170px', rotate: 42,  opacity: 0.48 },
-  { src: '/photo/flowers/white-peony.avif', top: '78%',  left: '48%',  size: '250px', rotate: 35,  opacity: 0.56 },
-  { src: '/photo/flowers/peony1.jpg',       top: '81%',  left: '60%',  size: '160px', rotate: -28, opacity: 0.46 },
-  { src: '/photo/flowers/peony2.png',       top: '84%',  left: '72%',  size: '220px', rotate: -25, opacity: 0.54 },
-  { src: '/photo/flowers/white-peony.avif', top: '87%',  left: '84%',  size: '190px', rotate: 18,  opacity: 0.5 },
-  { src: '/photo/flowers/peony1.jpg',       top: '90%',  left: '92%',  size: '290px', rotate: 15,  opacity: 0.6 },
+  { src: '/photo/flowers/white-peony.avif', top: '69%', left: '8%', size: '150px', rotate: -55, opacity: 0.44 },
+  { src: '/photo/flowers/peony1.jpg', top: '72%', left: '22%', size: '210px', rotate: -18, opacity: 0.52 },
+  { src: '/photo/flowers/peony2.png', top: '75%', left: '36%', size: '170px', rotate: 42, opacity: 0.48 },
+  { src: '/photo/flowers/white-peony.avif', top: '78%', left: '48%', size: '250px', rotate: 35, opacity: 0.56 },
+  { src: '/photo/flowers/peony1.jpg', top: '81%', left: '60%', size: '160px', rotate: -28, opacity: 0.46 },
+  { src: '/photo/flowers/peony2.png', top: '84%', left: '72%', size: '220px', rotate: -25, opacity: 0.54 },
+  { src: '/photo/flowers/white-peony.avif', top: '87%', left: '84%', size: '190px', rotate: 18, opacity: 0.5 },
+  { src: '/photo/flowers/peony1.jpg', top: '90%', left: '92%', size: '290px', rotate: 15, opacity: 0.6 },
 
   // Финал — нижний левый угол
-  { src: '/photo/flowers/peony2.png',       top: '93%',  left: '80%',  size: '160px', rotate: -45, opacity: 0.46 },
-  { src: '/photo/flowers/white-peony.avif', top: '96%',  left: '66%',  size: '200px', rotate: -30, opacity: 0.5 },
-  { src: '/photo/flowers/peony1.jpg',       top: '99%',  left: '50%',  size: '240px', rotate: 28,  opacity: 0.54 },
-  { src: '/photo/flowers/peony2.png',       top: '102%', left: '32%',  size: '180px', rotate: -18, opacity: 0.48 },
-  { src: '/photo/flowers/white-peony.avif', top: '105%', left: '12%',  size: '310px', rotate: -20, opacity: 0.58 },
+  { src: '/photo/flowers/peony2.png', top: '93%', left: '80%', size: '160px', rotate: -45, opacity: 0.46 },
+  { src: '/photo/flowers/white-peony.avif', top: '96%', left: '66%', size: '200px', rotate: -30, opacity: 0.5 },
+  { src: '/photo/flowers/peony1.jpg', top: '99%', left: '50%', size: '240px', rotate: 28, opacity: 0.54 },
+  { src: '/photo/flowers/peony2.png', top: '102%', left: '32%', size: '180px', rotate: -18, opacity: 0.48 },
+  { src: '/photo/flowers/white-peony.avif', top: '105%', left: '12%', size: '310px', rotate: -20, opacity: 0.58 },
 ]
 
 const stats = [
@@ -400,7 +387,11 @@ const plans = [
 </script>
 
 <style scoped>
-.page { background: #FEFCF5; position: relative; overflow: hidden; }
+.page {
+  background: #FEFCF5;
+  position: relative;
+  overflow: hidden;
+}
 
 .flowers {
   position: absolute;
@@ -409,31 +400,36 @@ const plans = [
   z-index: 1;
   overflow: hidden;
 }
+
 .flower {
   position: absolute;
   user-select: none;
   mix-blend-mode: multiply;
-  filter: drop-shadow(0 8px 20px rgba(139, 122, 184, 0.15))
-          saturate(0.95)
-          contrast(0.98);
+  filter: drop-shadow(0 8px 20px rgba(139, 122, 184, 0.15)) saturate(0.95) contrast(0.98);
   transition: transform 0.6s ease;
 }
 
-.page > section,
-.page > .container { position: relative; z-index: 2; }
+.page>section,
+.page>.container {
+  position: relative;
+  z-index: 2;
+  
+}
 
-.section { padding: 5rem 1rem; }
+.section {
+  padding: 5rem 1rem;
+}
+
 .section--light {
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #FEFCF5 0%,
       #FBF7EE 35%,
       #F4EEFB 70%,
-      #EFE7F7 100%
-    );
+      #EFE7F7 100%);
   position: relative;
 }
+
 .section--light::before {
   content: '';
   position: absolute;
@@ -444,8 +440,15 @@ const plans = [
   pointer-events: none;
 }
 
-.container { max-width: 1120px; margin: 0 auto; }
-.container--narrow { max-width: 780px; margin: 0 auto; }
+.container {
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.container--narrow {
+  max-width: 780px;
+  margin: 0 auto;
+}
 
 .section__title {
   font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
@@ -458,6 +461,7 @@ const plans = [
   font-weight: 600;
   letter-spacing: -0.02em;
 }
+
 .section__divider {
   width: 48px;
   height: 3px;
@@ -465,6 +469,7 @@ const plans = [
   margin: 0 auto 2rem;
   border-radius: 2px;
 }
+
 .section__lead {
   font-size: 1.25rem;
   color: #1E2A1E;
@@ -472,22 +477,23 @@ const plans = [
   margin-bottom: 1.5rem;
   line-height: 1.6;
 }
+
 .section__text {
   font-size: 1.05rem;
   color: #4A5B4A;
   text-align: center;
   line-height: 1.7;
 }
+
 .section--empatiyum {
   background:
-    linear-gradient(
-      135deg,
+    linear-gradient(135deg,
       #F8EDDF 0%,
       #F1E2E6 45%,
-      #E8D9F0 100%
-    );
+      #E8D9F0 100%);
   position: relative;
 }
+
 .section--empatiyum::before {
   content: '';
   position: absolute;
@@ -497,6 +503,7 @@ const plans = [
     radial-gradient(circle at 80% 70%, rgba(139, 122, 184, 0.14), transparent 55%);
   pointer-events: none;
 }
+
 .section__cta-text {
   font-size: 1.2rem;
   color: #1E2A1E;
@@ -505,12 +512,17 @@ const plans = [
   margin-top: 2rem;
   margin-bottom: 1.5rem;
 }
+
 .section__cta {
   display: flex;
   justify-content: center;
 }
 
-.hero { padding: 4rem 1rem 5rem; background: linear-gradient(135deg, #2a1f4a 30%, #7a6ba5 100%); }
+.hero {
+  padding: 4rem 1rem 5rem;
+  background: linear-gradient(135deg, #2a1f4a 30%, #7a6ba5 100%);
+}
+
 .hero__inner {
   max-width: 1120px;
   margin: 0 auto;
@@ -519,6 +531,7 @@ const plans = [
   gap: 3rem;
   align-items: center;
 }
+
 .hero__badge {
   display: inline-block;
   padding: 0.4rem 0.9rem;
@@ -530,6 +543,7 @@ const plans = [
   border: 1px solid rgba(150, 139, 182, 0.2);
   margin-bottom: 1.25rem;
 }
+
 .hero__title {
   font-family: 'Fraunces', 'Playfair Display', Georgia, serif;
   font-optical-sizing: auto;
@@ -542,12 +556,14 @@ const plans = [
   line-height: 1.05;
   text-shadow: 0 2px 30px rgba(139, 122, 184, 0.35);
 }
+
 .hero__subtitle {
   font-size: 1.35rem;
   color: white;
   margin-bottom: 1rem;
   line-height: 1.4;
 }
+
 .hero__text {
   font-size: 1.05rem;
   color: white;
@@ -555,15 +571,29 @@ const plans = [
   margin-bottom: 2rem;
   max-width: 480px;
 }
-.hero__actions { display: flex; gap: 0.75rem; flex-wrap: wrap; }
-.hero__media { display: flex; justify-content: center; }
+
+.hero__actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.hero__media {
+  display: flex;
+  justify-content: center;
+}
 
 .stats {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2rem;
 }
-.stat { text-align: center; padding: 1.5rem 1rem; }
+
+.stat {
+  text-align: center;
+  padding: 1.5rem 1rem;
+}
+
 .stat__value {
   display: block;
   font-size: 2.5rem;
@@ -575,9 +605,18 @@ const plans = [
     0 0 40px rgba(139, 122, 184, 0.2),
     0 0 60px rgba(139, 122, 184, 0.1);
 }
-.stat__label { font-size: 0.95rem; color: #4A5B4A; }
 
-.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.stat__label {
+  font-size: 0.95rem;
+  color: #4A5B4A;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
 .card {
   position: relative;
   border-radius: 18px;
@@ -586,9 +625,11 @@ const plans = [
   isolation: isolate;
   background: transparent;
   border: none;
+  text-align: center;
   transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
-              box-shadow 0.35s ease;
+    box-shadow 0.35s ease;
 }
+
 .card::before {
   content: '';
   position: absolute;
@@ -596,18 +637,17 @@ const plans = [
   left: -20%;
   width: 180%;
   height: 180%;
-  background: conic-gradient(
-    from 0deg at 50% 50%,
-    transparent 80deg,
-    transparent 180deg,
-    #D4A373 300deg,
-    #8B7AB8 330deg,
-    #D4A373 360deg
-  );
+  background: conic-gradient(from 0deg at 50% 50%,
+      transparent 80deg,
+      transparent 180deg,
+      #D4A373 300deg,
+      #8B7AB8 330deg,
+      #D4A373 360deg);
   animation: card-glow-spin 5s linear infinite;
   z-index: -2;
   pointer-events: none;
 }
+
 .card::after {
   content: '';
   position: absolute;
@@ -619,10 +659,12 @@ const plans = [
   z-index: -1;
   pointer-events: none;
 }
-.card > * {
+
+.card>* {
   position: relative;
   z-index: 1;
 }
+
 .card:hover {
   transform: translateY(-6px);
   box-shadow:
@@ -632,9 +674,15 @@ const plans = [
 }
 
 @keyframes card-glow-spin {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
 }
+
 .card__title {
   font-family: 'Fraunces', Georgia, serif;
   font-size: 1.25rem;
@@ -644,37 +692,63 @@ const plans = [
   letter-spacing: -0.01em;
   line-height: 1.25;
 }
+
 .card__text {
   font-size: 0.95rem;
   color: #4A5B4A;
   line-height: 1.65;
 }
 
-.audiences { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.audiences {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
 .audience {
   background: #FFFFFF;
   border: 1px solid #E6E2D8;
   border-radius: 10px;
   padding: 2rem;
+  text-align: center;
 }
-.audience__title { font-size: 1.3rem; color: #1E2A1E; margin-bottom: 0.75rem; font-weight: 700; }
-.audience__text { color: #4A5B4A; margin-bottom: 1.25rem; line-height: 1.6; }
-.audience__list { list-style: none; padding: 0; }
+
+.audience__title {
+  font-size: 1.3rem;
+  color: #1E2A1E;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+}
+
+.audience__text {
+  color: #4A5B4A;
+  margin-bottom: 1.25rem;
+  line-height: 1.6;
+}
+
+.audience__list {
+  list-style: none;
+  padding: 0;
+}
+
 .audience__list li {
-  padding: 0.4rem 0 0.4rem 1.5rem;
-  position: relative;
+  padding: 0.4rem 0;
   color: #4A5B4A;
   font-size: 0.95rem;
 }
+
 .audience__list li::before {
-  content: '—';
-  position: absolute;
-  left: 0;
+  content: '— ';
   color: #D4A373;
   font-weight: 700;
 }
 
-.pricing { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+.pricing {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
 .price-card {
   background: #FEFCF5;
   border: 1px solid #EFECE5;
@@ -683,18 +757,39 @@ const plans = [
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .price-card--accent {
   background: #FFFFFF;
   border: 1px solid #8B7AB8;
   box-shadow: 0 4px 16px rgba(139, 122, 184, 0.08);
 }
+
 .price-card:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
-.price-card__title { font-size: 1.2rem; color: #1E2A1E; margin-bottom: 0.5rem; font-weight: 700; }
-.price-card__desc { font-size: 0.95rem; color: #4A5B4A; line-height: 1.5; margin-bottom: 1.5rem; min-height: 3rem; }
-.price-card__price { font-size: 1.75rem; color: #8B7AB8; font-weight: 700; margin-bottom: 1.5rem; }
+
+.price-card__title {
+  font-size: 1.2rem;
+  color: #1E2A1E;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.price-card__desc {
+  font-size: 0.95rem;
+  color: #4A5B4A;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  min-height: 3rem;
+}
+
+.price-card__price {
+  font-size: 1.75rem;
+  color: #8B7AB8;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+}
 
 .founder {
   display: flex;
@@ -705,15 +800,17 @@ const plans = [
   border-radius: 12px;
   padding: 2.5rem;
 }
+
 .founder__avatar {
   flex-shrink: 0;
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #8B7AB8 0%, #D4A373 100%);
+  object-fit: cover;
   border: 3px solid #FEFCF5;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
+
 .founder__role {
   font-size: 0.85rem;
   color: #8B7AB8;
@@ -723,12 +820,40 @@ const plans = [
   margin-bottom: 0.5rem;
   display: block;
 }
-.founder__name { font-size: 1.6rem; color: #1E2A1E; margin-bottom: 1rem; font-weight: 700; }
-.founder__bio { color: #4A5B4A; line-height: 1.7; font-size: 1rem; }
 
-.cta { background: #1E2A1E; padding: 5rem 1rem; text-align: center; }
-.cta__title { color: #FEFCF5; font-size: 2.25rem; margin-bottom: 1rem; font-weight: 700; }
-.cta__text { color: #E6E2D8; font-size: 1.1rem; margin-bottom: 2rem; }
+.founder__name {
+  font-size: 1.6rem;
+  color: #1E2A1E;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.founder__bio {
+  color: #4A5B4A;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+.cta {
+  background: #1E2A1E;
+  padding: 5rem 1rem;
+  text-align: center;
+  background: url(/photo/poster_event.webp) center center/contain no-repeat #fff;
+}
+
+.cta__title {
+  color: #FEFCF5;
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.cta__text {
+  color: #2e2d3b;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
 
 .btn {
   display: inline-block;
@@ -744,6 +869,7 @@ const plans = [
   transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.3s ease, border-color 0.3s ease, color 0.3s ease;
   position: relative;
 }
+
 .btn--primary {
   color: #FFFFFF;
   background: linear-gradient(135deg, #8B7AB8 0%, #6B5A9E 50%, #9A88C4 100%);
@@ -754,6 +880,7 @@ const plans = [
     0 1px 2px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.2);
 }
+
 .btn--primary:hover {
   background-position: 100% 50%;
   transform: translateY(-2px);
@@ -770,14 +897,23 @@ const plans = [
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
+
 .btn--outline:hover {
   background: rgba(255, 255, 255, 0.15);
   border-color: rgba(255, 255, 255, 0.6);
   box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
 }
 
-.btn--small { padding: 0.7rem 1.6rem; font-size: 0.88rem; }
-.btn--large { padding: 1.1rem 3rem; font-size: 1.08rem; letter-spacing: 0.05em; }
+.btn--small {
+  padding: 0.7rem 1.6rem;
+  font-size: 0.88rem;
+}
+
+.btn--large {
+  padding: 1.1rem 3rem;
+  font-size: 1.08rem;
+  letter-spacing: 0.05em;
+}
 
 .btn-glow {
   display: inline-block;
@@ -785,26 +921,71 @@ const plans = [
   border: 1px solid rgba(255, 255, 255, 0.25);
   padding: 1.5px;
 }
-.btn-glow > .btn {
+
+.btn-glow>.btn {
   display: block;
 }
 
 @media (max-width: 900px) {
-  .hero__inner { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
-  .hero__text { margin-left: auto; margin-right: auto; }
-  .hero__actions { justify-content: center; }
-  .hero__title { font-size: 2.75rem; }
-  .stats { grid-template-columns: repeat(2, 1fr); }
-  .cards, .audiences, .pricing { grid-template-columns: 1fr; }
-  .founder { flex-direction: column; text-align: center; }
-  .section { padding: 3.5rem 1rem; }
-  .section__title { font-size: 1.75rem; }
+  .hero__inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    text-align: center;
+  }
+
+  .hero__text {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero__actions {
+    justify-content: center;
+  }
+
+  .hero__title {
+    font-size: 2.75rem;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .cards,
+  .audiences,
+  .pricing {
+    grid-template-columns: 1fr;
+  }
+
+  .founder {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .section {
+    padding: 3.5rem 1rem;
+  }
+
+  .section__title {
+    font-size: 1.75rem;
+  }
 }
 
 @media (max-width: 520px) {
-  .hero__title { font-size: 2.25rem; }
-  .stats { grid-template-columns: 1fr; gap: 0.5rem; }
-  .stat { padding: 0.75rem; }
-  .stat__value { font-size: 2rem; }
+  .hero__title {
+    font-size: 2.25rem;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .stat {
+    padding: 0.75rem;
+  }
+
+  .stat__value {
+    font-size: 2rem;
+  }
 }
 </style>
