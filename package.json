@@ -15,6 +15,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "nodemailer": "^9.0.1",
     "nuxt": "^4.4.4",
     "sharp": "^0.35.1"
   }

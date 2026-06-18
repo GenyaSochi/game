@@ -70,7 +70,7 @@
         <p class="section__cta-text">Хотите, чтобы вас понимали без слов?</p>
         <div class="section__cta">
           <span class="btn-glow">
-            <NuxtLink to="/personal" class="btn btn--primary">Записаться на игру</NuxtLink>
+            <button class="btn btn--primary" @click="showForm = true">Записаться на игру</button>
           </span>
         </div>
       </div>
@@ -82,7 +82,10 @@
         <div class="section__divider"></div>
         <div class="cards">
           <article class="card" v-for="skill in skills" :key="skill.title">
-            <h3 class="card__title">{{ skill.title }}</h3>
+            <h3 class="card__title">
+              <span class="gradient-border"></span>
+              {{ skill.title }}
+            </h3>
             <p class="card__text">{{ skill.text }}</p>
           </article>
         </div>
@@ -95,6 +98,7 @@
         <div class="section__divider"></div>
         <div class="audiences">
           <article class="audience" v-for="aud in audiences" :key="aud.title">
+            <div class="gradient-border"></div>
             <h3 class="audience__title">{{ aud.title }}</h3>
             <p class="audience__text">{{ aud.text }}</p>
             <ul class="audience__list">
@@ -112,6 +116,7 @@
         <div class="pricing">
           <article class="price-card" v-for="plan in plans" :key="plan.title"
             :class="{ 'price-card--accent': plan.accent }">
+            <div class="gradient-border"></div>
             <h3 class="price-card__title">{{ plan.title }}</h3>
             <p class="price-card__desc">{{ plan.desc }}</p>
             <div class="price-card__price">{{ plan.price }}</div>
@@ -149,20 +154,68 @@
           Оставьте заявку и мы подберём для вас подходящий формат игры
         </p>
         <span class="btn-glow btn-glow--large">
-          <NuxtLink to="/contact" class="btn btn--primary btn--large">
-            Оставить заявку
-          </NuxtLink>
+          <button class="btn btn--primary btn--large" @click="showForm = true">Оставить заявку</button>
         </span>
       </div>
     </section>
   </main>
+
+  <!-- Modal Feedback Form -->
+  <Teleport to="body">
+    <div v-if="showForm" class="modal-overlay" @click.self="showForm = false">
+      <div class="modal">
+        <div class="gradient-border"></div>
+        <button class="modal__close" @click="showForm = false">&times;</button>
+        <h3 class="modal__title">Записаться на игру</h3>
+        <p class="modal__subtitle">Оставьте заявку и мы свяжемся с вами</p>
+        <form class="modal__form" @submit.prevent="submitForm">
+          <input v-model="form.name" type="text" placeholder="Ваше имя" required class="modal__input" />
+          <input v-model="form.phone" type="tel" placeholder="Телефон" required class="modal__input" />
+          <input v-model="form.email" type="email" placeholder="Email" class="modal__input" />
+          <textarea v-model="form.message" placeholder="Сообщение (необязательно)" class="modal__textarea" rows="3"></textarea>
+          <button type="submit" class="btn btn--primary modal__submit" :disabled="formSent">
+            {{ formSent ? 'Отправлено!' : 'Отправить' }}
+          </button>
+        </form>
+      </div>
+    </div>
+  </Teleport>
 </template>
 
 <script setup>
 import MainComponent from '~/components/MainComponent.vue'
-import { ref, watch, onBeforeUnmount } from 'vue'
+import { ref, reactive, watch, onBeforeUnmount } from 'vue'
 
 const dustCanvas = ref(null)
+const showForm = ref(false)
+const formSent = ref(false)
+const form = reactive({
+  name: '',
+  phone: '',
+  email: '',
+  message: '',
+})
+
+async function submitForm() {
+  try {
+    await $fetch('/api/send-email', {
+      method: 'POST',
+      body: { ...form },
+    })
+    formSent.value = true
+    setTimeout(() => {
+      showForm.value = false
+      formSent.value = false
+      form.name = ''
+      form.phone = ''
+      form.email = ''
+      form.message = ''
+    }, 2000)
+  } catch (e) {
+    console.error('Ошибка отправки:', e)
+    alert('Не удалось отправить. Попробуйте позже.')
+  }
+}
 
 const golds = [
   [212, 163, 115],
@@ -387,6 +440,15 @@ const plans = [
 </script>
 
 <style scoped>
+:root {
+  --color-primary: #8B7AB8;
+  --color-accent-purple: #a78bba;
+  --color-accent-pink: #d4a373;
+  --color-accent-cyan: #6dd5b0;
+  --radius-xl: 18px;
+  --transition-normal: 0.35s ease;
+}
+
 .page {
   background: #FEFCF5;
   position: relative;
@@ -440,9 +502,43 @@ const plans = [
   pointer-events: none;
 }
 
+.section--skills {
+  position: relative;
+  background: url(/photo/poster_event_styled.webp) center center/cover no-repeat;
+  padding: 5rem 1rem;
+}
+
+.section--skills::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(30, 20, 40, 0.75);
+  pointer-events: none;
+}
+
+.section--skills .container {
+  position: relative;
+  z-index: 1;
+}
+
+.section--skills .section__title,
+.section--skills .section__divider {
+  color: #F0EAF5;
+}
+
+.section--skills .card__title {
+  color: #F0EAF5;
+}
+
+.section--skills .card__text {
+  color: #d4cde0;
+}
+
 .container {
   max-width: 1120px;
   margin: 0 auto;
+  text-align: center;
+  padding: 0 0 40px 0;
 }
 
 .container--narrow {
@@ -628,6 +724,10 @@ const plans = [
   text-align: center;
   transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
     box-shadow 0.35s ease;
+  box-shadow:
+    0 0 15px rgba(0, 220, 130, 0.1),
+    0 0 30px rgba(139, 92, 246, 0.06),
+    0 0 60px rgba(0, 220, 130, 0.04);
 }
 
 .card::before {
@@ -668,9 +768,55 @@ const plans = [
 .card:hover {
   transform: translateY(-6px);
   box-shadow:
-    0 20px 40px -12px rgba(139, 122, 184, 0.28),
-    0 8px 16px -8px rgba(0, 0, 0, 0.06),
-    0 0 30px -5px rgba(139, 122, 184, 0.35);
+    0 0 20px rgba(0, 220, 130, 0.25),
+    0 0 40px rgba(139, 92, 246, 0.15),
+    0 0 80px rgba(0, 220, 130, 0.08);
+}
+
+.card:hover .gradient-border,
+.audience:hover .gradient-border,
+.price-card:hover .gradient-border,
+.card:hover .card__title .gradient-border {
+  opacity: 1;
+}
+
+.modal .gradient-border {
+  opacity: 1;
+}
+
+.gradient-border {
+  position: absolute;
+  inset: 0;
+  border-radius: 6px;
+  padding: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--color-primary),
+    var(--color-accent-purple),
+    var(--color-accent-pink),
+    var(--color-accent-cyan),
+    var(--color-primary)
+  );
+  background-size: 300% 300%;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  z-index: 1;
+  opacity: 0;
+  transition: opacity var(--transition-normal);
+  animation: gradient-rotate 4s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes gradient-rotate {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
 @keyframes card-glow-spin {
@@ -684,6 +830,8 @@ const plans = [
 }
 
 .card__title {
+  position: relative;
+  display: inline-block;
   font-family: 'Fraunces', Georgia, serif;
   font-size: 1.25rem;
   color: #3D2C5A;
@@ -691,6 +839,7 @@ const plans = [
   font-weight: 600;
   letter-spacing: -0.01em;
   line-height: 1.25;
+  padding: 0.15em 0.3em;
 }
 
 .card__text {
@@ -711,6 +860,20 @@ const plans = [
   border-radius: 10px;
   padding: 2rem;
   text-align: center;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.35s ease;
+  box-shadow:
+    0 0 15px rgba(0, 220, 130, 0.1),
+    0 0 30px rgba(139, 92, 246, 0.06),
+    0 0 60px rgba(0, 220, 130, 0.04);
+}
+
+.audience:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 20px rgba(0, 220, 130, 0.25),
+    0 0 40px rgba(139, 92, 246, 0.15),
+    0 0 80px rgba(0, 220, 130, 0.08);
 }
 
 .audience__title {
@@ -755,18 +918,25 @@ const plans = [
   border-radius: 10px;
   padding: 2rem;
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.35s ease;
+  box-shadow:
+    0 0 15px rgba(0, 220, 130, 0.1),
+    0 0 30px rgba(139, 92, 246, 0.06),
+    0 0 60px rgba(0, 220, 130, 0.04);
 }
 
 .price-card--accent {
   background: #FFFFFF;
   border: 1px solid #8B7AB8;
-  box-shadow: 0 4px 16px rgba(139, 122, 184, 0.08);
 }
 
 .price-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 20px rgba(0, 220, 130, 0.25),
+    0 0 40px rgba(139, 92, 246, 0.15),
+    0 0 80px rgba(0, 220, 130, 0.08);
 }
 
 .price-card__title {
@@ -834,16 +1004,18 @@ const plans = [
   font-size: 1rem;
 }
 
-.cta {
+/* .cta {
   background: #1E2A1E;
   padding: 5rem 1rem;
   text-align: center;
-  background: url(/photo/poster_event.webp) center center/contain no-repeat #fff;
-}
+  background: url(/photo/poster_event_styled.webp) center center/contain no-repeat #fff;
+  width: 100vw;
+  margin-left: calc(-50vw + 50%);
+} */
 
 .cta__title {
-  color: #FEFCF5;
-  font-size: 2.25rem;
+  color: #3D2C5A;
+  font-size: 2.75rem;
   margin-bottom: 1rem;
   font-weight: 700;
 }
@@ -987,5 +1159,104 @@ const plans = [
   .stat__value {
     font-size: 2rem;
   }
+}
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(30, 20, 40, 0.7);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10000;
+  padding: 1rem;
+}
+
+.modal {
+  background: #FEFCF5;
+  border-radius: var(--radius-xl);
+  padding: 2.5rem 2rem;
+  max-width: 440px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+  box-shadow:
+    0 0 15px rgba(0, 220, 130, 0.1),
+    0 0 30px rgba(139, 92, 246, 0.06),
+    0 0 60px rgba(0, 220, 130, 0.04),
+    0 25px 60px rgba(60, 30, 80, 0.3);
+}
+
+.modal__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.75rem;
+  color: #888;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+
+.modal__close:hover {
+  color: #333;
+}
+
+.modal__title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 0 0.25rem;
+  color: #2e2d3b;
+}
+
+.modal__subtitle {
+  font-size: 0.95rem;
+  color: #777;
+  margin: 0 0 1.5rem;
+}
+
+.modal__form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.modal__input,
+.modal__textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #e0dce6;
+  border-radius: 10px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  background: #fff;
+  color: #2e2d3b;
+  outline: none;
+  transition: border-color 0.25s, box-shadow 0.25s;
+  box-sizing: border-box;
+}
+
+.modal__input:focus,
+.modal__textarea:focus {
+  border-color: #a78bba;
+  box-shadow: 0 0 0 3px rgba(167, 139, 186, 0.15);
+}
+
+.modal__textarea {
+  resize: vertical;
+  min-height: 70px;
+}
+
+.modal__submit {
+  margin-top: 0.5rem;
+}
+
+.modal__submit:disabled {
+  opacity: 0.7;
+  cursor: default;
 }
 </style>
