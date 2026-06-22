@@ -1,5 +1,6 @@
 <template>
-  <footer class="footer">
+  <footer ref="footerEl" class="footer">
+    <canvas ref="glowCanvas" class="footer__canvas"></canvas>
     <div class="footer__glow"></div>
     <div class="footer__container">
       <div class="footer__brand">
@@ -33,6 +34,122 @@
   </footer>
 </template>
 
+<script setup>
+import { ref, onMounted, onBeforeUnmount, nextTick } from 'vue'
+
+const footerEl = ref(null)
+const glowCanvas = ref(null)
+
+let animId = null
+let mouseX = -999
+let mouseY = -999
+let isMoving = false
+let idleTimer = null
+let resizeObserver = null
+
+const onPointerMove = (x, y) => {
+  if (!footerEl.value) return
+  const rect = footerEl.value.getBoundingClientRect()
+  mouseX = x - rect.left
+  mouseY = y - rect.top
+  isMoving = true
+  if (idleTimer) clearTimeout(idleTimer)
+  idleTimer = setTimeout(() => { isMoving = false }, 150)
+}
+
+const onMouseMove = (e) => {
+  onPointerMove(e.clientX, e.clientY)
+}
+
+const onTouchMove = (e) => {
+  if (e.touches.length > 0) {
+    onPointerMove(e.touches[0].clientX, e.touches[0].clientY)
+  }
+}
+
+const onTouchStart = (e) => {
+  if (e.touches.length > 0) {
+    onPointerMove(e.touches[0].clientX, e.touches[0].clientY)
+  }
+}
+
+const onTouchEnd = () => {
+  isMoving = false
+  mouseX = -999
+  mouseY = -999
+}
+
+const onMouseLeave = () => {
+  mouseX = -999
+  mouseY = -999
+  isMoving = false
+}
+
+const startGlow = (canvas) => {
+  const ctx = canvas.getContext('2d')
+  if (!ctx) return
+
+  const resize = () => {
+    const footer = footerEl.value
+    if (!footer) return
+    canvas.width = footer.offsetWidth
+    canvas.height = footer.offsetHeight
+  }
+  resize()
+
+  resizeObserver = new ResizeObserver(resize)
+  resizeObserver.observe(footerEl.value)
+
+  window.addEventListener('mousemove', onMouseMove)
+  window.addEventListener('touchmove', onTouchMove, { passive: true })
+  window.addEventListener('touchstart', onTouchStart, { passive: true })
+  window.addEventListener('touchend', onTouchEnd)
+  window.addEventListener('touchcancel', onTouchEnd)
+
+  const loop = () => {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    if (mouseX > 0 && mouseY > 0) {
+      ctx.globalAlpha = isMoving ? 0.35 : 0.2
+
+      const r = 90
+      const gradient = ctx.createRadialGradient(mouseX, mouseY, 0, mouseX, mouseY, r)
+      gradient.addColorStop(0, 'rgba(140, 100, 180, 0.6)')
+      gradient.addColorStop(0.4, 'rgba(167, 139, 186, 0.25)')
+      gradient.addColorStop(1, 'rgba(140, 100, 180, 0)')
+
+      ctx.fillStyle = gradient
+      ctx.beginPath()
+      ctx.arc(mouseX, mouseY, r, 0, Math.PI * 2)
+      ctx.fill()
+    }
+
+    ctx.globalAlpha = 1
+    animId = requestAnimationFrame(loop)
+  }
+
+  animId = requestAnimationFrame(loop)
+}
+
+onMounted(async () => {
+  await nextTick()
+  if (glowCanvas.value) {
+    startGlow(glowCanvas.value)
+  }
+})
+
+onBeforeUnmount(() => {
+  if (animId) cancelAnimationFrame(animId)
+  if (idleTimer) clearTimeout(idleTimer)
+  if (resizeObserver) resizeObserver.disconnect()
+  window.removeEventListener('mousemove', onMouseMove)
+  window.removeEventListener('touchmove', onTouchMove)
+  window.removeEventListener('touchstart', onTouchStart)
+  window.removeEventListener('touchend', onTouchEnd)
+  window.removeEventListener('touchcancel', onTouchEnd)
+})
+</script>
+
 <style scoped>
 .footer {
   position: relative;
@@ -40,7 +157,16 @@
   padding: 3.5rem 1.5rem 1.5rem;
   margin-top: auto;
   color: #c8bdd4;
-  overflow: hidden;
+  overflow: visible;
+}
+
+.footer__canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
 }
 
 .footer__glow {
@@ -88,7 +214,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0.5rem 0.25rem;
+  gap: 0.5rem 0.5rem;
 }
 
 .footer__link {
@@ -99,10 +225,11 @@
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 500;
-  padding: 0.4rem 0.85rem;
+  padding: 0.55rem 1rem;
   border-radius: 20px;
   transition: color 0.25s ease;
-  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .footer__link:hover,
@@ -148,6 +275,21 @@
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+@media (max-width: 480px) {
+  .footer {
+    padding: 2.5rem 1rem 1rem;
+  }
+
+  .footer__nav {
+    gap: 0.4rem;
+  }
+
+  .footer__link {
+    font-size: 0.85rem;
+    padding: 0.6rem 0.9rem;
+  }
 }
 
 @media (min-width: 768px) {

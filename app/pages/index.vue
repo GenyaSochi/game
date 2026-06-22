@@ -134,7 +134,7 @@
     <section class="section">
       <div class="container container--narrow">
         <div class="founder">
-          <img class="founder__avatar" src="/photo/main.webp" alt="Елизавета Ловягина" />
+          <img class="founder__avatar" src="/photo/main.webp" alt="Елена Смецкая" />
           <div class="founder__content">
             <span class="founder__role">персональная консультация</span>
             <h3 class="founder__name">Елена Смецкая</h3>
@@ -364,52 +364,6 @@ onBeforeUnmount(() => {
   running = false
   particles = []
 })
-
-// Плотный S-образный шлейф пионов через всю страницу
-const flowers = [
-  // Старт — верхний левый угол
-  { src: '/photo/flowers/peony1.jpg', top: '2%', left: '-4%', size: '320px', rotate: -15, opacity: 0.6 },
-  { src: '/photo/flowers/white-peony.avif', top: '5%', left: '8%', size: '160px', rotate: 42, opacity: 0.44 },
-  { src: '/photo/flowers/peony2.png', top: '8%', left: '18%', size: '200px', rotate: 22, opacity: 0.5 },
-  { src: '/photo/flowers/peony1.jpg', top: '11%', left: '26%', size: '150px', rotate: -35, opacity: 0.44 },
-
-  // Первая волна → вправо
-  { src: '/photo/flowers/peony2.png', top: '15%', left: '36%', size: '230px', rotate: -28, opacity: 0.56 },
-  { src: '/photo/flowers/white-peony.avif', top: '18%', left: '46%', size: '140px', rotate: 55, opacity: 0.44 },
-  { src: '/photo/flowers/peony1.jpg', top: '21%', left: '56%', size: '180px', rotate: -10, opacity: 0.5 },
-  { src: '/photo/flowers/peony2.png', top: '24%', left: '66%', size: '250px', rotate: 18, opacity: 0.56 },
-  { src: '/photo/flowers/white-peony.avif', top: '28%', left: '78%', size: '170px', rotate: -42, opacity: 0.46 },
-  { src: '/photo/flowers/peony1.jpg', top: '31%', left: '86%', size: '210px', rotate: -32, opacity: 0.54 },
-  { src: '/photo/flowers/peony2.png', top: '35%', left: '93%', size: '290px', rotate: 12, opacity: 0.6 },
-
-  // Поворот ← влево
-  { src: '/photo/flowers/white-peony.avif', top: '39%', left: '84%', size: '160px', rotate: 38, opacity: 0.44 },
-  { src: '/photo/flowers/peony1.jpg', top: '43%', left: '74%', size: '200px', rotate: -20, opacity: 0.52 },
-  { src: '/photo/flowers/peony2.png', top: '47%', left: '62%', size: '240px', rotate: 30, opacity: 0.55 },
-  { src: '/photo/flowers/white-peony.avif', top: '50%', left: '50%', size: '150px', rotate: -48, opacity: 0.46 },
-  { src: '/photo/flowers/peony1.jpg', top: '53%', left: '38%', size: '210px', rotate: 20, opacity: 0.52 },
-  { src: '/photo/flowers/peony2.png', top: '56%', left: '26%', size: '180px', rotate: -15, opacity: 0.5 },
-  { src: '/photo/flowers/white-peony.avif', top: '59%', left: '14%', size: '220px', rotate: -40, opacity: 0.54 },
-  { src: '/photo/flowers/peony1.jpg', top: '62%', left: '3%', size: '190px', rotate: 32, opacity: 0.5 },
-  { src: '/photo/flowers/peony2.png', top: '65%', left: '-4%', size: '270px', rotate: 25, opacity: 0.58 },
-
-  // Вторая волна → вправо
-  { src: '/photo/flowers/white-peony.avif', top: '69%', left: '8%', size: '150px', rotate: -55, opacity: 0.44 },
-  { src: '/photo/flowers/peony1.jpg', top: '72%', left: '22%', size: '210px', rotate: -18, opacity: 0.52 },
-  { src: '/photo/flowers/peony2.png', top: '75%', left: '36%', size: '170px', rotate: 42, opacity: 0.48 },
-  { src: '/photo/flowers/white-peony.avif', top: '78%', left: '48%', size: '250px', rotate: 35, opacity: 0.56 },
-  { src: '/photo/flowers/peony1.jpg', top: '81%', left: '60%', size: '160px', rotate: -28, opacity: 0.46 },
-  { src: '/photo/flowers/peony2.png', top: '84%', left: '72%', size: '220px', rotate: -25, opacity: 0.54 },
-  { src: '/photo/flowers/white-peony.avif', top: '87%', left: '84%', size: '190px', rotate: 18, opacity: 0.5 },
-  { src: '/photo/flowers/peony1.jpg', top: '90%', left: '92%', size: '290px', rotate: 15, opacity: 0.6 },
-
-  // Финал — нижний левый угол
-  { src: '/photo/flowers/peony2.png', top: '93%', left: '80%', size: '160px', rotate: -45, opacity: 0.46 },
-  { src: '/photo/flowers/white-peony.avif', top: '96%', left: '66%', size: '200px', rotate: -30, opacity: 0.5 },
-  { src: '/photo/flowers/peony1.jpg', top: '99%', left: '50%', size: '240px', rotate: 28, opacity: 0.54 },
-  { src: '/photo/flowers/peony2.png', top: '102%', left: '32%', size: '180px', rotate: -18, opacity: 0.48 },
-  { src: '/photo/flowers/white-peony.avif', top: '105%', left: '12%', size: '310px', rotate: -20, opacity: 0.58 },
-]
 
 const stats = [
   { value: '10 000+', label: 'игроков' },
