@@ -1,0 +1,1 @@
+<template>Доп инфо</template>
