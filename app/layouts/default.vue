@@ -27,6 +27,10 @@ import FooterComponent from '~/components/FooterComponent.vue'
   padding: 0;
 }
 
+html, body {
+  overflow-x: hidden;
+}
+
 body {
   background: #FEFCF5;
 }

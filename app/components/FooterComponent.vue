@@ -174,7 +174,7 @@ onBeforeUnmount(() => {
   top: -60%;
   left: 50%;
   transform: translateX(-50%);
-  width: 600px;
+  width: min(600px, 100vw);
   height: 300px;
   background: radial-gradient(ellipse, rgba(140, 100, 180, 0.12) 0%, transparent 70%);
   pointer-events: none;
