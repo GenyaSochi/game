@@ -122,7 +122,10 @@
             <p class="price-card__desc">{{ plan.desc }}</p>
             <div class="price-card__price">{{ plan.price }}</div>
             <span class="btn-glow">
-              <NuxtLink :to="plan.link" class="btn btn--primary btn--small">
+              <button v-if="plan.cta === 'Связаться'" class="btn btn--primary btn--small" @click="showForm = true">
+                {{ plan.cta }}
+              </button>
+              <NuxtLink v-else :to="plan.link" class="btn btn--primary btn--small">
                 {{ plan.cta }}
               </NuxtLink>
             </span>
